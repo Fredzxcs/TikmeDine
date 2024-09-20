@@ -1,0 +1,85 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+}
+
+.home {
+    min-height: 100vh;
+    width: 100vw;
+    background-image: url("{% static 'assets/images/pic4.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    text-align: center;
+    padding: 0 1rem;
+    position: relative;
+    overflow: hidden !important;
+    padding-top: 80px;
+}
+
+.faq {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.faq h2 {
+    font-size: 5.0rem; /* Increased font size */
+    font-family: 'Ingrid Darling', serif; /* Updated font style */
+    color: #d1a35a; /* Updated font color */
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.faq .faq-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.faq .faq-item {
+    flex: 1 1 calc(50% - 2rem);
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+.faq .faq-item h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+}
+
+.faq .faq-item h3::before {
+    content: '+';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: #d1a35a;
+}
+
+.faq-item p {
+    display: none;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-top: 10px;
+    color: #666;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+.faq .faq-item.active p {
+    display: block;
+}

@@ -1,0 +1,112 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+}
+
+.home {
+    min-height: 100vh;
+    width: 100vw;
+    background-image: url("{% static 'assets/images/gallery11.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    text-align: center;
+    padding: 0 1rem;
+    position: relative;
+    overflow: hidden !important;
+    padding-top: 80px;
+}
+
+.contact-section {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+
+.contact-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: rem;
+    color: #d1a35a;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.contact-image-container {
+    position: relative;
+    text-align: center;
+    color: #3b3b3b;
+
+}
+
+.contact-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    filter: brightness(0.5); /* Optional: to make the text stand out more */
+}
+
+.contact-image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #d1a35a;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%; /* Adjust width to fit within the image */
+    max-width: 600px; /* Set a max-width to prevent overflow */
+    line-height: 1.5; /* Improve line spacing for readability */
+}
+
+.contact-image-text h1 {
+    font-size: 3rem;/* Increased font size for the main heading */
+    color: #d1a35a;
+    margin-bottom: 20px;
+}
+
+.contact-image-text h3, .contact-image-text p {
+    font-size: 1.2rem; /* Adjusted for better readability */
+    color: #fff;
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+.contact-image-text ul {
+    list-style: disc;
+    color: #fff;
+    padding-left: 20px;
+    text-align: left; /* Aligns list items to the left */
+    margin: 10px 0;
+    margin-bottom: 20px;
+
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.contact-form button {
+    background-color: #d1a35a;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background-color: #5e2ced;
+}

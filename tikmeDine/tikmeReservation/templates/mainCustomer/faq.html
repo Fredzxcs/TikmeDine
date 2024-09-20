@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}FAQs - Tikme Dine{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/faq.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section id="faq" class="faq">
+        <h2>Frequently Asked Questions (FAQ)</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <h3>What types of events does TikmeDine cater to?</h3>
+                <p>We cater to a variety of events including weddings, corporate events, birthday parties, and more.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What sets TikmeDine apart from other event places in Quezon City?</h3>
+                <p>Our unique blend of exceptional service, elegant ambiance, and customizable event options set us apart.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Where is the TikmeDine Place Located?</h3>
+                <p>Our venue is located in Quezon City, providing a convenient and accessible location for your events.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>To ensure a smooth experience, we will help you make better decisions every step of the way.</h3>
+                <p>Here are the top frequently asked questions (FAQs) of our customers.</p>
+            </div>
+
+            <!-- Duplicated FAQs -->
+            <div class="faq-item">
+                <h3>What types of events does TikmeDine cater to?</h3>
+                <p>We cater to a variety of events including weddings, corporate events, birthday parties, and more.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What sets TikmeDine apart from other event places in Quezon City?</h3>
+                <p>Our unique blend of exceptional service, elegant ambiance, and customizable event options set us apart.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Where is the TikmeDine Place Located?</h3>
+                <p>Our venue is located in Quezon City, providing a convenient and accessible location for your events.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>To ensure a smooth experience, we will help you make better decisions every step of the way.</h3>
+                <p>Here are the top frequently asked questions (FAQs) of our customers.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}                                              
+
+{% block extra_js %}
+    <script src="{% static 'js/faq.js' %}" defer></script>
+{% endblock %}

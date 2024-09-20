@@ -1,0 +1,11 @@
+<!-- templates/includes/navbar.html -->
+<nav>
+    <div class="brand">Tikme Dine</div>
+    <ul>
+        <li><a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+        <li><a href="{% url 'menu' %}" class="{% if request.path == '/menu/' %}active{% endif %}">Menu</a></li>
+        <li><a href="{% url 'reservation' %}" class="{% if request.path == '/reservation/' %}active{% endif %}">Reservation</a></li>
+        <li><a href="{% url 'faq' %}" class="{% if request.path == '/faq/' %}active{% endif %}">FAQs</a></li>
+        <li><a href="{% url 'contact' %}" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a></li>
+    </ul>
+</nav>

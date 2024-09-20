@@ -1,0 +1,102 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Tikme Dine{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2 class="heading">About Us</h2>   
+        <div class="content">
+            <p>In the heart of a hustling and bustling city, THE ROYALCARE VENUE is a Sanctuary of relaxation, safety, and peace.<br>
+                Along with the Royal Café and Tikme Dine, We pride ourselves on our high-class provincial vibe designed to cater for your occasion.
+                We provide not just delightful and sumptuous FEASTS, but also memories worthy OF Remembering for a lifetime.
+            </p>
+            <img src="{% static 'assets/images/pic4.jpg' %}" alt="About Us Image">
+        </div>
+        <video controls width="1000" height="600">
+            <source src="{% static 'assets/video/tikme.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </section>
+
+    <!-- Showcase Section -->
+    <section id="showcase">
+        <div class="showcase-content">
+            <div class="showcase-item">
+                <div class="showcase-image left">
+                    <img src="{% static 'assets/images/gallery4.jpg' %}" alt="Showcase Image 1">
+                </div>
+                <div class="showcase-text right">
+                    <h2>Our Cozy Indoor Dining Space</h2>
+                    <p>Step into a warm and inviting atmosphere at Tikme Dine...</p>
+                </div>
+            </div>
+            
+            <div class="showcase-item">
+                <div class="showcase-image right">
+                    <img src="{% static 'assets/images/gallery9.jpg' %}" alt="Showcase Image 1">
+                </div>
+                <div class="showcase-text left">
+                    <h2>Serenity Awaits Outdoors</h2>
+                  <p>Surrounded by lush greenery, the exterior of Tikme Dine is a picturesque escape from the everyday. Ascend our charming staircase, lined with vibrant purple railings, to discover an inviting terrace that overlooks our beautifully manicured garden. The exterior design, inspired by classic Filipino architecture with modern twists, features a serene white facade adorned with climbing plants and a golden crown emblem. Nestled among palms and tropical plants, this tranquil space sets the tone for a dining experience that feels like a retreat into nature—whether you’re dining in the garden or inside, the ambiance promises relaxation and delight.</p>
+                </div>
+              </div>
+          
+              <div class="showcase-item">
+                <div class="showcase-image left">
+                    <img src="{% static 'assets/images/gallery10.jpg' %}" alt="Showcase Image 1">
+                </div>
+                <div class="showcase-text right">
+                  <h2>Serene Garden Terrace</h2>
+                  <p>Step into a tranquil oasis with our serene garden terrace, where nature and comfort combine to create the perfect dining atmosphere. The natural beauty of lush greenery surrounds the space, offering a peaceful backdrop as you dine at the elegantly designed wooden table and wicker chairs. Overhead, a sophisticated green canopy provides the ideal amount of shade, making the terrace enjoyable in any weather. The contemporary design of the tiled flooring enhances the calm ambiance, while the glass railing offers a seamless view of the surrounding garden. Whether you're hosting a gathering or seeking a quiet meal, our garden terrace ensures a refreshing and memorable experience.</p>
+                </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <h2 class="heading">Our Gallery</h2>
+        <div class="gallery-row">
+            
+            <div class="gallery-column">
+                <img src="{% static 'assets/images/galleryimage1.jpg' %}" alt="Gallery Image 1">
+            </div>
+            <div class="gallery-column">
+                <img src="{% static 'assets/images/galleryimage2.jpg' %}" alt="Gallery Image 1">
+            </div>
+            <div class="gallery-column">
+                <img src="{% static 'assets/images/galleryimage3.jpg' %}" alt="Gallery Image 1">
+            </div>
+            <div class="gallery-column">
+                <img src="{% static 'assets/images/galleryimage4.jpg' %}" alt="Gallery Image 1">
+            </div>
+            <div class="gallery-column">
+                <img src="{% static 'assets/images/galleryimage5.jpg' %}" alt="Gallery Image 1">
+            </div>
+            
+        </div>
+        <div class="gallery-container">
+            <span class="closebtn">&times;</span>
+            <img id="expandedImg" src="" alt="Expanded Image">
+            <div id="imgtext"></div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team-section">
+        <h2 class="heading">Our Team</h2>
+        <div class="team-container">
+            <img src="{% static 'assets/images/team.jpg' %}" alt="Team Picture" class="team-picture">
+        </div>
+    </section>                                                                                                                                                                                                          
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/home.js' %}" defer></script>
+{% endblock %}
