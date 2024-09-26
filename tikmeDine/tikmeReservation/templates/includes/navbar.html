@@ -1,11 +1,32 @@
 <!-- templates/includes/navbar.html -->
-<nav>
-    <div class="brand">Tikme Dine</div>
-    <ul>
-        <li><a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
-        <li><a href="{% url 'menu' %}" class="{% if request.path == '/menu/' %}active{% endif %}">Menu</a></li>
-        <li><a href="{% url 'reservation' %}" class="{% if request.path == '/reservation/' %}active{% endif %}">Reservation</a></li>
-        <li><a href="{% url 'faq' %}" class="{% if request.path == '/faq/' %}active{% endif %}">FAQs</a></li>
-        <li><a href="{% url 'contact' %}" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a></li>
-    </ul>
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="#home">Tikme Dine</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="#home">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#about">ABOUT</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#menu">MENU</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#services">SERVICES</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#faqs">FAQs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#contact">CONTACT</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-reserve" href="#reserve">RESERVE NOW!</a>
+            </li>
+        </ul>
+    </div>
 </nav>

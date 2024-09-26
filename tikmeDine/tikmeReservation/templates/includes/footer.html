@@ -1,77 +1,54 @@
-<!-- templates/includes/footer.html -->
-<footer class="new_footer_area bg_color">
-    <div class="new_footer_top">
-      <div class="container">
-        <div class="row">
-          <!-- Get in Touch Section -->
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+  <div class="container py-5">
+      <div class="row g-5">
           <div class="col-lg-3 col-md-6">
-            <div class="f_widget company_widget wow fadeInLeft" data-wow-delay="0.2s">
-              <h3 class="f-title f_600 t_color f_size_18">Get in Touch</h3>
-              <p>Don’t miss any updates of our new templates and extensions.!</p>
-              <form action="#" class="f_subscribe_two mailchimp" method="post" novalidate="true">
-                <input type="text" name="EMAIL" class="form-control memail" placeholder="Email">
-                <button class="btn btn_get btn_get_two" type="submit">Subscribe</button>
-                <p class="mchimp-errmessage" style="display: none;"></p>
-                <p class="mchimp-sucmessage" style="display: none;"></p>
-              </form>
-            </div>
+              <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Company</h4>
+              <a class="btn btn-link" href="">About Us</a>
+              <a class="btn btn-link" href="">Contact Us</a>
+              <a class="btn btn-link" href="">Reservation</a>
+              <a class="btn btn-link" href="">Privacy Policy</a>
+              <a class="btn btn-link" href="">Terms & Condition</a>
           </div>
-          
-          <!-- Links Section -->
-          <div class="col-lg-3 col-md-6"> 
-            
-            <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.4s">
-              <h3 class="f-title f_600 t_color f_size_18">Links</h3>
-              <ul class="list-unstyled f_list">
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'menu' %}">Menu</a></li>
-                <li><a href="{% url 'reservation' %}">Reservation</a></li>
-                <li><a href="{% url 'faq' %}">FAQ's</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <!-- Help Section -->
           <div class="col-lg-3 col-md-6">
-            <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s">
-              <h3 class="f-title f_600 t_color f_size_18">Help</h3>
-              <ul class="list-unstyled f_list">
-                <li><a href="#">Term &amp; conditions</a></li>
-                <li><a href="#">Reporting</a></li>
-                <li><a href="#">Documentation</a></li>
-                <li><a href="#">Support Policy</a></li>
-                <li><a href="#">Privacy</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <!-- Social Media Section -->
-          <div class="col-lg-3 col-md-6">
-            <div class="f_widget social-widget pl_70 wow fadeInLeft" data-wow-delay="0.8s">
-              <h3 class="f-title f_600 t_color f_size_18">Team Solutions</h3>
-              <div class="f_social_icon">
-                <a href="https://www.facebook.com/TikmeDine" target="_blank" class="fab fa-facebook"></a>
-                <a href="https://www.instagram.com/tikmedine/?hl=en" target="_blank" class="fab fa-instagram"></a>
+              <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
+              <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Fairview, Quezon City</p>
+              <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+              <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+              <div class="d-flex pt-2">
+                  <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                  <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                  <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                  <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
               </div>
-            </div>
           </div>
-        </div>
-      </div>
-      <div class="footer_bg">
-        <div class="footer_bg_one"></div>
-        <div class="footer_bg_two"></div>
-      </div>
-    </div>
-    
-    <!-- Footer Bottom Section -->
-    <div class="footer_bottom">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-12 col-sm-7">
-            <p class="mb-0 f_400 text-right">© Tikme Dine 2024. All rights reserved.</p>
+          <div class="col-lg-3 col-md-6">
+              <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Opening</h4>
+              <h5 class="text-light fw-normal">Monday - Saturday</h5>
+              <p>09AM - 09PM</p>
+              <h5 class="text-light fw-normal">Sunday</h5>
+              <p>09AM - 10PM</p>
           </div>
-        </div>
+          <div class="col-lg-3 col-md-6">
+              <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Newsletter</h4>
+              <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+              <div class="position-relative mx-auto" style="max-width: 400px;">
+                  <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                  <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+              </div>
+          </div>
       </div>
-    </div>
-</footer>
+  </div>
+  <div class="container">
+      <div class="copyright">
+          <div class="row">
+              <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                  &copy; <a class="border-bottom" href="#">Tikme Dine</a>, All Right Reserved. 
+              </div>
+          </div>
+      </div>
+  </div>        
+
+   <!-- Back to Top -->
+   <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
