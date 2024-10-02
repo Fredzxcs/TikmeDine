@@ -1,8 +1,8 @@
 # tikmeCustomer/views.py
 from django.shortcuts import render
 
-def index(request):
+def home(request):
     """View function for the home page."""
-    return render(request, 'mainCustomer/index.html')
+    return render(request, 'mainCustomer/home.html')
 
 

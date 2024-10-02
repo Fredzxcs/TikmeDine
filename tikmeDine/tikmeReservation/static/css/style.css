@@ -1,18 +1,16 @@
 body {
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
+    color: #fff;
 }
 
-h1, h2, h3 {
-    font-family: 'Playfair Display', serif;
+p {
+    font-size: 16px;
+    line-height: 1.8;
 }
 
-.home {
+.hero {
     min-height: 100vh;
     width: 100vw;
-    background-image: url("{% static 'assets/images/tikme.png' %}");
+    background-image: url('/tikme.png');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -26,49 +24,56 @@ h1, h2, h3 {
     padding-top: 80px;
 }
 
-video {
-    opacity: 0; /* Initially hide the video */
-    animation: fadeInUp 5s forwards; /* Apply the fade-in-up animation */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Adjust opacity (0.5) to control darkness */
+    
 }
 
-
-
-/* Team section styles */
-.team-section {
-    text-align: center;
-    padding: 50px 0;
-    background-color: #f9f9f9;
+.hero .wave {
+    position: absolute;
+    bottom: -.5rem;
+    left: 0;
+    height: 11rem;
+    width: 100%;
+    background: url('/wave.png');
+    background-size: 100rem 11rem;
+    animation: waves 8s linear infinite;
+    background-repeat: repeat-x;
 }
 
-.team-section .heading {
-    color: #d1a35a;
-    font-size: 36px;
-    margin-bottom: 30px;
-    font-family: 'Playfair Display', serif;
+.hero .wave2 {
+    animation-direction: reverse;
+    animation-duration: 6s;
+    opacity: .3;
 }
 
-.team-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    animation: fadeInUpward 1.5s forwards ease-out;
+.hero .wave3 {
+    animation-duration: 4s;
+    opacity: .5;
 }
 
-.team-container .team-picture {
-    max-width: 100%;  /* Adjust this percentage as needed for picture size */
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-/* Fade-in upward animation for the team section */
-@keyframes fadeInUpward {
+@keyframes waves {
     0% {
-        opacity: 0;
-        transform: translateY(50px);
+        background-position-x: 0;
     }
     100% {
-        opacity: 1;
-        transform: translateY(0);
+        background-position-x: 100rem;
     }
+}
+
+/* About Section */
+.section-title {
+color: #6c63ff;
+margin-bottom: 20px;
+}
+
+.btn-primary:hover {
+    background-color: #5a54d7;
+    border-color: #5a54d7;
 }
