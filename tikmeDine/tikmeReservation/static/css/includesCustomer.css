@@ -1,50 +1,4 @@
-/* Loader Style */
-.loading-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: white; /* Ensure plain white background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 1s ease-out; /* For smooth fade-out */
-    opacity: 1; /* Start fully visible */
-}
 
-.loading-container i {
-    font-size: 50px;
-    color: #333;
-}
-
-.loader {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    border: 5px solid #333;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 0.8s linear;
-    z-index: -1; /* Place behind the icon */
-}
-
-/* Keyframes for spinning animation */
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* Fade-out effect */
-.fade-out {
-    opacity: 0; /* Make loader invisible */
-    transition: opacity 5s ease-out; /* Fade out duration */
-}
 /* Navbar Style */
 .navbar {
     background-color: #743C88;
@@ -75,179 +29,10 @@
     color: #FEA116;
 }
 
-.btn-primary {
-    background-color: #FEA116;
-    border-color:  #FEA116;
-    box-shadow: #333;
-}
-
-.btn-primary:hover:hover {
-    background-color: #FEA116;
-    border-color: #fff;
-}
-
-/* logo tikme */
-.logo-container {
-    text-align: center;
-}
-
-.main-text {
-    font-size: 5rem;
-    color: transparent; /* Start with no fill */
-    font-family: 'Cinzel Decorative', cursive;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
-    display: inline-block;
-    opacity: 1; /* Ensure visibility during animation */
-    position: relative; /* Allows positioning of individual letters */
-    transition: color 0.3s; /* Smooth color transition on hover */
-}
-
-.main-text span {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: buildUp 0.5s ease forwards;
-}
-
-@keyframes buildUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fillText {
-    from {
-        color: transparent;
-    }
-    to {
-        color: #f8f8ff; /* Bright white */
-    }
-    to {
-        color: #FFEA00; /* Bright yellow */
-    }
-}
-
-@keyframes glow {
-    0% {
-        text-shadow: 0 0 10px #f8f8ff, 0 0 20px #f8f8ff, 0 0 30px #f8f8ff, 0 0 40px #f8f8ff;
-        color: #f8f8ff; /* Bright white */
-    }
-    100% {
-        text-shadow: 0 0 20px #A75BCA, 0 0 30px #A75BCA, 0 0 40px #A75BCA, 0 0 50px #A75BCA; /* Brighter violet */
-        color: #A75BCA; /* Bright violet */
-    }
-}
-
-
-.sub-text {
-    margin-top: -10px;
-    margin-left: 220px;
-    font-size: 1.5rem;
-    color: #fff;
-    opacity: 0;
-    animation: fadeInGlow 3s ease forwards 1.5s;
-}
-
-@keyframes fadeInGlow {
-    0% {
-        opacity: 0;
-        text-shadow: none;
-    }
-    100% {
-        opacity: 1;
-        text-shadow: 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff;
-    }
-}
-
-/* Flag-bar styling */
-.flag-bar {
-    height: 4px;
-    width: 410px;
-    margin: 0 0 15px 220px;
-    background: linear-gradient(to right, green, white, red);
-    border-radius: 2px;
-    position: relative;
-    animation: barGlowCenter 2s ease-in-out forwards;
-    }
-
-.flag-bar::before, .flag-bar::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 50%;
-    border-radius: 2px;
-}
-
-.flag-bar::before {
-    left: 50%;
-    transform: translateX(-50%);
-    background: none;
-    animation: centerGlow 2s ease-in-out forwards;
-}
-
-@keyframes centerGlow {
-    0% {
-        box-shadow: 0 0 5px rgba(0, 255, 0, 0.5), 0 0 5px rgba(255, 255, 255, 0.5), 0 0 5px rgba(255, 0, 0, 0.5);
-    }
-    50% {
-        box-shadow: 0 0 15px rgba(0, 255, 0, 0.8), 0 0 15px rgba(255, 255, 255, 0.8), 0 0 15px rgba(255, 0, 0, 0.8);
-    }
-    100% {
-        box-shadow: 0 0 30px rgba(0, 255, 0, 1), 0 0 30px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 0, 0, 1);
-        transform: scaleX(1); /* Expand the glow outward */
-    }
-}
-
-.btn {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 500;
-    text-transform: uppercase;
-    transition: .5s;
-}
-
-.btn.btn-primary,
-.btn.btn-secondary {
-    color: #FFFFFF;
-}
-
-.btn-square {
-    width: 38px;
-    height: 38px;
-}
-
-.btn-sm-square {
-    width: 32px;
-    height: 32px;
-}
-
-.btn-lg-square {
-    width: 48px;
-    height: 48px;
-}
-
-.btn-square,
-.btn-sm-square,
-.btn-lg-square {
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: normal;
-    border-radius: 2px;
-}
-
-.flag-bar::after {
-    right: 50%;
-    transform: translateX(50%);
-    background: none;
-    animation: centerGlow 2s ease-in-out forwards;
-}
 
 /* Footer Style */
 .footer {
-    background-color: #8A0EB5;
+    background-color: #743C88;
     color: #fff;
     padding-top: 40px;
 }
@@ -268,11 +53,12 @@
 
 /* Back to Top Button */
 .back-to-top {
-    background-color: #6c63ff;
+    background-color: #000000;
     position: fixed;
-    bottom: 20px;
-    right: 20px;
     display: none;
+    right: 45px;
+    bottom: 45px;
+    z-index: 99;
 }
 
 .back-to-top:hover {

@@ -1,0 +1,148 @@
+/* Set base styles for body and html */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa; /* Bootstrap default light background */
+}
+
+/* Gradient for the right panel */
+.gradient-custom-2 {
+  background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+  color: white;
+}
+
+/* Image slider container */
+.image-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-top-right-radius: .3rem;
+  border-bottom-right-radius: .3rem;
+}
+
+/* Image styling */
+.image-slider img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1s ease-in-out;
+}
+
+.image-slider img.hidden {
+  opacity: 0;
+}
+
+.image-slider img.active {
+  opacity: 1;
+}
+
+/* Card customization */
+.card {
+  border-radius: .3rem;
+  font-size: 1.1rem; /* Bootstrap-friendly base font size */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styling */
+.btn-primary {
+  background-color: #ee7724;
+  background-image: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+  color: white;
+  font-size: 1.1rem;
+  padding: 12px 20px; /* Bootstrap-friendly button padding */
+  border: none;
+  border-radius: .25rem; /* Bootstrap default border radius */
+}
+
+.btn-outline-danger {
+  border-color: #d8363a;
+  color: #d8363a;
+  font-size: 1.1rem;
+  padding: 12px 20px;
+  border-radius: .25rem;
+}
+
+.btn-outline-danger:hover {
+  background-color: #d8363a;
+  color: white;
+}
+
+/* Form input styles */
+.form-control {
+  padding: 12px;
+  font-size: 1.1rem;
+  border-radius: .25rem; /* Use Bootstrap's default form border-radius */
+  margin-bottom: 20px; /* Ensure consistent spacing */
+}
+
+.form-outline {
+  margin-bottom: 1.5rem; /* Bootstrap-like spacing for form groups */
+}
+
+/* Custom styles for text */
+.text-center h4 {
+  font-size: 1.5rem;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Horizontal line under the title */
+.horizontal-line {
+  height: 2px;
+  background-color: #333;
+  margin: 0.75rem auto; 
+  width: 50px;
+}
+
+/* Custom muted text */
+.text-muted {
+  color: #6c757d !important;
+  font-size: 1rem;
+}
+
+/* Card body adjustments for spacing */
+.card-body {
+  padding: 2.5rem; /* Bootstrap's padding utility */
+}
+
+/* Full-width buttons */
+.btn-block {
+  display: block;
+  width: 100%;
+  font-size: 1.1rem;
+}
+
+/* Responsive height adjustment */
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
+  }
+}
+
+/* Adjust container width */
+.container {
+  max-width: 85%; /* Bootstrap's wider container */
+}
+
+/* Custom class for red text */
+.text-login {
+  color: #d8363a;
+  font-weight: bold;
+}
+
+/* Responsive design tweaks */
+@media (max-width: 576px) {
+  .card-body {
+    padding: 1.5rem;
+  }
+  .btn-block {
+    font-size: 1rem;
+  }
+}

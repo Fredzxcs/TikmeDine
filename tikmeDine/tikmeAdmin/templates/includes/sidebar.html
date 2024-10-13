@@ -1,0 +1,47 @@
+{% load static %} 
+<div class="sidebar-wrapper">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Restaurant Reservation Admin</h2>
+            <button class="menu-btn" onclick="toggleSidebar()">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <a class="active" href="#home">
+            <i class="fa fa-fw fa-home"></i><span>Dashboard</span>
+        </a>
+        <button class="dropdown-btn">
+            <i class="fa fa-fw fa-utensils"></i> <span>Dine In</span> 
+            <i class="fa fa-caret-down"></i> 
+        </button>
+        <div class="dropdown-container">
+            <a href="#"><i class="fa fa-fw fa-tachometer-alt"></i><span>Dashboard</span></a>
+            <a href="#"><i class="fa fa-fw fa-search"></i><span>Search</span></a>
+            <a href="#"><i class="fa fa-fw fa-calendar-check"></i><span>Reservations</span></a>
+            <a href="#"><i class="fa fa-fw fa-users"></i><span>Guests</span></a>
+            <a href="#"><i class="fa fa-fw fa-chair"></i><span>Tables</span></a>
+        </div>
+        <button class="dropdown-btn">
+            <i class="fa fa-fw fa-calendar"></i> <span>Event</span> 
+            <i class="fa fa-caret-down"></i> 
+        </button>
+        <div class="dropdown-container">
+            <a href="#"><i class="fa fa-fw fa-tachometer-alt"></i><span>Dashboard</span></a>
+            <a href="#"><i class="fa fa-fw fa-search"></i><span>Search</span></a>
+            <a href="#"><i class="fa fa-fw fa-calendar-check"></i><span>Reservations</span></a>
+            <a href="#"><i class="fa fa-fw fa-users"></i><span>Guests</span></a>
+            <a href="#"><i class="fa fa-fw fa-map-marker-alt"></i><span>Event Place</span></a>
+        </div>
+        <a href="#">
+            <i class="fa fa-fw fa-cog"></i> <span>Settings</span>
+        </a>
+        <a href="#">
+            <i class="fa fa-fw fa-sign-out-alt"></i> <span>Logout</span>
+        </a>
+        <!-- Sidebar footer for logo and version -->
+        <div class="sidebar-footer">
+            <img src="{% static 'assets/images/tikme-logo.png' %}" alt="Logo"> <!-- Provide a valid logo path -->
+            <p>v1.0.0</p>
+        </div>
+    </div>
+</div>
