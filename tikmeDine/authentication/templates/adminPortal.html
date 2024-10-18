@@ -6,44 +6,33 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid h-100">
-    <div class="row h-100">
-      <!-- Left Panel -->
-      <div class="col-lg-8 d-flex align-items-center justify-content-center">
-        <div class="left-panel">
-          <img src="tikme-logo.png" alt="Tikme Dine Logo">
-          <div class="horizontal-line"></div>
-          <h2>Choose your destination</h2>
-
-          <!-- Buttons -->
-          <button class="option-button button-reservation">
-            <span>Reservation and Booking System</span>
-          </button>
-
-          <button class="option-button button-logistics">
-            <span>Logistics + Inventory System</span>
-          </button>
-
-          <button class="option-button button-finance">
-            <span>Finance Management System</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Right Panel (Image Slider) -->
-      <div class="col-lg-4 d-flex align-items-center justify-content-center">
-            <div class="right-panel">
-                <div class="slider">
-                    <img src="gallery1.jpg" class="active" alt="Dining Setup 1">
-                    <img src="gallery2.jpg" alt="Dining Setup 2">
-                    <img src="gallery3.jpg" alt="Dining Setup 3">
-                </div>
-            </div>
-      </div>
+<div class="main-container">
+  <div class="row row-no-gutters">
+    <!-- Left Panel -->
+    <div class="col-md-6 left-panel">
+      <img src="{% static 'assets/images/tikme-logo.png' %}" alt="Tikme Dine Logo">
+      <div class="divider"></div>
+      <h2 class="heading">Choose your destination</h2>
+      <!-- Buttons -->
+      <button class="option-button button-reservation">
+        Reservation and Booking System
+      </button>
+      <button class="option-button button-logistics">
+        Logistics + Inventory System
+      </button>
+      <button class="option-button button-finance">
+        Finance Management System
+      </button>
     </div>
+
+    <!-- Right Panel (Image) -->
+    <div class="col-md-6 right-panel">
+      <img src="{% static 'assets/images/gallery9.png' %}" alt="Dining Setup">
+    </div>
+  </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/adminAuthentication.js' %}"></script>
+
 {% endblock %}
