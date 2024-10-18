@@ -87,7 +87,7 @@ window.onload = function () {
         delay: 10,
         time: 2000
     });
-    
+
     
     document.getElementById('contactForm').addEventListener('submit', function(event) {
         event.preventDefault();
