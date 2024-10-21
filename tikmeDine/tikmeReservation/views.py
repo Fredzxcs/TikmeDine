@@ -5,4 +5,6 @@ def tikmeCustomer(request):
     return render(request, 'tikmeCustomer.html')
 
 
+def reservation(request):
+    return render(request, 'reservation.html')
 
