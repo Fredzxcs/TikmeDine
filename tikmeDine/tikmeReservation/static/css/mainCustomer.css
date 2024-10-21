@@ -176,7 +176,6 @@
 .btn {
     font-family: 'Nunito', sans-serif;
     font-weight: 500;
-    text-transform: uppercase;
     transition: .5s;
 }
 
@@ -457,8 +456,13 @@
 
 .section-title p {
     text-align: center;
-    color: #555;
-    font-size: 16px;
+    font-size: 30px;
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-family: "Nunito", sans-serif;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #0F172B;
 }
 
 /* Team */
@@ -473,8 +477,8 @@
 
 }
 .team-section h2 {
-    color: #2b61e6;
-    font-weight: bold;
+    color: #ff9800;
+    font-weight: normal;
 }
 .team-description {
     max-width: 800px;
@@ -498,8 +502,7 @@
 }
 
 .faq h2 {
-    font-size: 3rem; /* Decreased font size for better readability */
-    font-family: 'Ingrid Darling', serif;
+    font-size: 36px; /* Decreased font size for better readability */
     color: #8A0EB5;
     margin-bottom: 1.5rem; /* Adjusted margin for better spacing */
     text-align: center;
@@ -508,7 +511,7 @@
 .faq .faq-container {
     display: flex;
     flex-direction: column; /* Change to column for a single column layout */
-    gap: 1.5rem; /* Adjust gap between items */
+    gap: 6px; /* Adjust gap between items */
 }
 
 .faq .faq-item {
@@ -572,11 +575,6 @@
 h2 {
     color: #ff9800;
     margin-bottom: 20px;
-}
-
-h2 span {
-    color: #6a1b9a;
-    font-style: italic;
 }
 
 .btn-primary {
