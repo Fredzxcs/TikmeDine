@@ -1,7 +1,10 @@
+# authentication/urls.py
 from django.urls import path
-from . import views
+from .views import create_employee, setup_account, admin_login, portal
 
 urlpatterns = [
-    path('', views.adminAuthentication, name='adminAuthentication'),  # Authentication page
-
+    path('create_employee/', create_employee, name='create_employee'),
+    path('setup/<uidb64>/<token>/', setup_account, name='setup_account'),
+    path('admin_login/', admin_login, name='admin_login'),
+    path('portal/', portal, name='portal'),
 ]

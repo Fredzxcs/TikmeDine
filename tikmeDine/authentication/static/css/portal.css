@@ -1,0 +1,95 @@
+/* Body Styling */
+body {
+    background-color: #f8f9fa; /* Equivalent to bg-light */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Equivalent to vh-100 */
+    margin: 0;
+    }
+
+    /* Container Styling */
+    .main-container {
+    max-width: 900px;
+    background-color: #fff; /* Equivalent to bg-white */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Equivalent to shadow-lg */
+    border-radius: 20px; /* Equivalent to rounded */
+    padding: 0; /* Equivalent to p-0 */
+    }
+
+    /* Row Styling */
+    .row-no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+    }
+
+    /* Left Panel Styling */
+    .left-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem; /* Equivalent to p-4 */
+    }
+
+    /* Image Styling */
+    .left-panel img {
+    width: 250px;
+    margin-bottom: 1.5rem; /* Equivalent to mb-4 */
+    }
+
+    /* Divider Styling */
+    .divider {
+    width: 80%;
+    height: 2px;
+    margin-bottom: 25px;
+    background-color: #8A0EB5;
+    }
+
+    /* Heading Styling */
+    .heading {
+    font-size: 1rem;
+    color: #344767;
+    margin-bottom: 1rem; /* Equivalent to mb-3 */
+    }
+
+    /* Custom Styling for Buttons */
+    .option-button {
+    border: none;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: #fff;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 75%; /* Equivalent to w-75 */
+    }
+    .button-reservation {
+    background-image: url('/static/assets/images/about-1.png'); /* Direct URL */
+    }
+    .button-logistics {
+    background-image: url('/static/assets/images/about-2.png');
+    }
+    .button-finance {
+    background-image: url('/static/assets/images/about-3.png');
+    }
+    
+    .option-button:hover {
+    opacity: 0.9;
+    }
+
+    /* Right Panel Styling */
+    .right-panel img {
+    width: 110%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0 0.25rem 0.25rem 0; /* Equivalent to rounded-right */
+    }
