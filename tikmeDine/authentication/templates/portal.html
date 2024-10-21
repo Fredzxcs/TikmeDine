@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-<link href="{% static 'css/adminAuthentication.css' %}" rel="stylesheet">
+<link href="{% static 'css/portal.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -14,17 +14,22 @@
       <div class="divider"></div>
       <h2 class="heading">Choose your destination</h2>
       <!-- Buttons -->
-      <button class="option-button button-reservation">
-        Reservation and Booking System
-      </button>
-      <button class="option-button button-logistics">
-        Logistics + Inventory System
-      </button>
-      <button class="option-button button-finance">
-        Finance Management System
-      </button>
+      <a href="{% url 'admin_login' %}">
+        <button class="option-button button-reservation">
+          Reservation and Booking System
+        </button>
+      </a>
+      <a href="">
+        <button class="option-button button-logistics">
+          Logistics Management System
+        </button>
+      </a>
+      <a href="">
+        <button class="option-button button-finance">
+          Finance Management System
+        </button>
+      </a>
     </div>
-
     <!-- Right Panel (Image) -->
     <div class="col-md-6 right-panel">
       <img src="{% static 'assets/images/gallery9.png' %}" alt="Dining Setup">
@@ -34,5 +39,4 @@
 {% endblock %}
 
 {% block extra_js %}
-
 {% endblock %}

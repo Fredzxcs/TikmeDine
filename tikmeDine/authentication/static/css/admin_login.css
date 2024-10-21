@@ -1,0 +1,127 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #eee;
+}
+
+/* Gradient for the right panel */
+.gradient-custom-2 {
+  /* Fallback for old browsers */
+  background: #fccb90;
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+}
+
+/* Image slider container */
+.image-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-top-right-radius: .3rem;
+  border-bottom-right-radius: .3rem;
+}
+
+/* Image styling */
+.image-slider img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1s ease-in-out;
+}
+
+.image-slider img.hidden {
+  opacity: 0;
+}
+
+/* Make form larger */
+.card {
+  border-radius: 0.3rem;
+  overflow: hidden;
+  font-size: 1.2rem; /* Increase the base font size */
+}
+
+.btn-primary {
+  background-color: #ee7724;
+  background-image: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+  color: white;
+  border: none;
+  font-size: 1.2rem; /* Increase button text size */
+  padding: 15px 25px; /* Increase button size */
+}
+
+.btn-outline-danger {
+  border: 1px solid red;
+  color: red;
+  font-size: 1.2rem; /* Increase button text size */
+  padding: 15px 25px; /* Increase button size */
+}
+
+/* Increase input size */
+.form-control {
+  padding: 15px;
+  margin-bottom: 25px;
+  font-size: 1.2rem; /* Larger input text */
+}
+
+.text-center h4 {
+    font-size: 16px; /* Larger heading */
+    font-family: 'Roboto', sans-serif; /* Apply Nunito font */
+    color: #333333;
+}
+
+/* Style for the horizontal line */
+.horizontal-line {
+  height: 2px; /* Height of the horizontal line */
+  background-color: #333333; /* Line color */
+  margin: 1rem auto; /* Centering and spacing */
+  width: 100%; /* Full width */
+  max-width: 500px; /* Maximum width of the line */
+  margin-top: -30px;
+}
+
+/* Increase text size */
+.text-muted {
+  color: #6c757d !important;
+  font-size: 1.1rem;
+}
+
+/* Increase spacing */
+.card-body {
+  padding: 4rem; /* Increase form padding */
+}
+
+/* Larger text for label */
+.form-label {
+  font-size: 1.1rem;
+}
+
+/* Buttons full width */
+.btn-block {
+  display: block;
+  width: 100%;
+  font-size: 1.2rem; /* Larger button text */
+}
+
+/* Responsive height */
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
+  }
+}
+
+/* Adjust container width to be larger */
+.container {
+  max-width: 80%; /* Wider container */
+}
+
+/* Custom class for red text */
+.text-login {
+
+  color: #d8363a;
+  font-weight: bold; /* Make text bold */
+}
