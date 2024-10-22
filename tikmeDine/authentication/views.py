@@ -7,7 +7,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from .models import Employee
-from .forms import EmployeeCreationForm, SetupAccountForm
+from .forms import EmployeeCreationForm, SetupSecurityQuestionsForm, SetupPasswordForm
 
 @login_required
 def portal(request):
@@ -46,7 +46,7 @@ def send_setup_email(employee):
     token = default_token_generator.make_token(employee)
     uid = urlsafe_base64_encode(force_bytes(employee.pk))
     link = reverse('setup_account', kwargs={'uidb64': uid, 'token': token})
-    full_link = f"https://tikmedine.com{link}"
+    full_link = f"http://127.0.0.1:8000{link}"
     send_mail(
         'Set Up Your Account',
         f'Hello {employee.first_name},\n\nPlease click the link to set up your account: {full_link}\nYour username: {employee.username}\n\nBest regards,\nAdmin Team',
@@ -63,19 +63,36 @@ def setup_account(request, uidb64, token):
 
     if employee is not None and default_token_generator.check_token(employee, token):
         if request.method == 'POST':
-            form = SetupAccountForm(request.POST)
+            form = SetupSecurityQuestionsForm(request.POST)
+            if form.is_valid():
+                employee.security_answer_1 = form.cleaned_data['security_answer_1']
+                employee.security_answer_2 = form.cleaned_data['security_answer_2']
+                employee.security_answer_3 = form.cleaned_data['security_answer_3']
+                employee.save()
+                # Redirect to the password setup view
+                return redirect('setup_password', uidb64=uidb64, token=token)
+        else:
+            form = SetupSecurityQuestionsForm()
+        return render(request, 'setup_security_questions.html', {'form': form, 'employee': employee})
+    else:
+        return render(request, 'invalid_link.html')
+
+def setup_password(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        employee = Employee.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, Employee.DoesNotExist):
+        employee = None
+
+    if employee is not None and default_token_generator.check_token(employee, token):
+        if request.method == 'POST':
+            form = SetupPasswordForm(request.POST)
             if form.is_valid():
                 employee.set_password(form.cleaned_data['password'])
-                employee.security_question_1 = form.cleaned_data['security_question_1']
-                employee.security_answer_1 = form.cleaned_data['security_answer_1']
-                employee.security_question_2 = form.cleaned_data['security_question_2']
-                employee.security_answer_2 = form.cleaned_data['security_answer_2']
-                employee.security_question_3 = form.cleaned_data['security_question_3']
-                employee.security_answer_3 = form.cleaned_data['security_answer_3']
                 employee.save()
                 return redirect('admin_login')
         else:
-            form = SetupAccountForm()
-        return render(request, 'setup_account.html', {'form': form, 'employee': employee})
+            form = SetupPasswordForm()
+        return render(request, 'setup_password.html', {'form': form, 'employee': employee})
     else:
         return render(request, 'invalid_link.html')
