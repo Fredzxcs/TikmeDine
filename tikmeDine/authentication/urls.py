@@ -9,3 +9,4 @@ urlpatterns = [
     path('admin_login/', admin_login, name='admin_login'),
     path('', portal, name='portal'),
 ]
+
