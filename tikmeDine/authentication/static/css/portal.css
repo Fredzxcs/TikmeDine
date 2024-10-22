@@ -6,61 +6,67 @@ body {
     align-items: center;
     height: 100vh; /* Equivalent to vh-100 */
     margin: 0;
-    }
+}
 
-    /* Container Styling */
-    .main-container {
-    max-width: 900px;
+/* Container Styling */
+.main-container {
+    max-width: 1200px; /* Increased max-width to make the container bigger */
     background-color: #fff; /* Equivalent to bg-white */
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Equivalent to shadow-lg */
     border-radius: 20px; /* Equivalent to rounded */
     padding: 0; /* Equivalent to p-0 */
-    }
+}
 
-    /* Row Styling */
-    .row-no-gutters {
+/* Row Styling */
+.row-no-gutters {
     margin-right: 0;
     margin-left: 0;
-    }
+}
 
-    /* Left Panel Styling */
-    .left-panel {
+/* Left Panel Styling */
+.left-panel {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+  /*  justify-content: center; */
     align-items: center;
     text-align: center;
-    padding: 1.5rem; /* Equivalent to p-4 */
-    }
+    padding: 2rem; /* Increased padding */
+    margin-top: 30px;
+}
 
-    /* Image Styling */
-    .left-panel img {
-    width: 250px;
-    margin-bottom: 1.5rem; /* Equivalent to mb-4 */
-    }
+/* Tikme Logo Styling */
+.tikme-logo {
+    width: 100%;          /* Set width to 100% for smaller screens */
+    height: auto;         /* Maintain aspect ratio by setting height to auto */
+    max-width: 450px;     /* Limit max width for larger screens */
+    max-height: 180px;    /* Limit max height to maintain size */
+    object-fit: cover;    /* Ensure the image fills the area correctly without distortion */
+    display: block;       /* Ensure the image is displayed as a block element */
+}
 
-    /* Divider Styling */
-    .divider {
-    width: 80%;
+/* Divider Styling */
+.divider {
+    width: 90%; /* Increased width of the divider */
     height: 2px;
-    margin-bottom: 25px;
+    margin-bottom: 30px; /* Increased bottom margin */
     background-color: #8A0EB5;
-    }
+}
 
-    /* Heading Styling */
-    .heading {
-    font-size: 1rem;
+/* Heading Styling */
+.heading {
+    font-size: 1.2rem; /* Increased font size */
     color: #344767;
-    margin-bottom: 1rem; /* Equivalent to mb-3 */
-    }
+    margin-bottom: 1.5rem; /* Increased bottom margin */
+}
 
-    /* Custom Styling for Buttons */
-    .option-button {
+/* Custom Styling for Buttons */
+.option-button {
     border: none;
     border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 15px;
-    font-size: 1.1rem;
+    padding: 25px; /* Increased padding */
+    margin-bottom: 20px; /* Increased margin */
+    font-size: 1.2rem; /* Increased font size */
+    font-weight: 650; /* Semi-bold text */
     color: #fff;
     text-align: center;
     background-size: cover;
@@ -69,27 +75,28 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60px;
-    width: 75%; /* Equivalent to w-75 */
-    }
-    .button-reservation {
-    background-image: url('/static/assets/images/about-1.png'); /* Direct URL */
-    }
-    .button-logistics {
-    background-image: url('/static/assets/images/about-2.png');
-    }
-    .button-finance {
-    background-image: url('/static/assets/images/about-3.png');
-    }
-    
-    .option-button:hover {
-    opacity: 0.9;
-    }
+    height: 90px; /* Increased button height */
+    width: 400px; /* Increased button width */
+}
 
-    /* Right Panel Styling */
-    .right-panel img {
-    width: 110%;
+.button-reservation {
+    background-image: url('/static/assets/images/about-1.png');
+}
+.button-logistics {
+    background-image: url('/static/assets/images/about-2.png');
+}
+.button-finance {
+    background-image: url('/static/assets/images/about-3.png');
+}
+
+.option-button:hover {
+    opacity: 0.9;
+}
+
+/* Right Panel Styling */
+.right-panel img {
+    width: 120%; /* Increased image width */
     height: 100%;
     object-fit: cover;
-    border-radius: 0 0.25rem 0.25rem 0; /* Equivalent to rounded-right */
-    }
+    border-radius: 0 0.25rem 0.25rem 0;
+}

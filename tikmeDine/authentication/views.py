@@ -8,10 +8,13 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from .models import Employee
 from .forms import EmployeeCreationForm, SetupAccountForm
+import logging
 
-@login_required
+logger = logging.getLogger(__name__)
+
+# Publicly accessible portal view
 def portal(request):
-    user = request.user
+    logger.debug(f"User accessing portal: {request.path}")
     available_modules = [
         {'name': 'Reservation and Booking System', 'url': '/reservation/admin_login/'},
         {'name': 'Logistics Management System', 'url': '/logistics/admin_login/'},
@@ -19,6 +22,7 @@ def portal(request):
     ]
     return render(request, 'portal.html', {'available_modules': available_modules})
 
+# Custom login view for admin access
 def admin_login(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -26,9 +30,12 @@ def admin_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('/tikmeAdmin/admin_dashboard/')
+            return redirect('/auth/portal/')  # Redirect to portal after successful login
+        else:
+            return render(request, 'admin_login.html', {'error': 'Invalid username or password'})  # Handle invalid login
     return render(request, 'admin_login.html')
 
+# View to create a new employee and send account setup email
 def create_employee(request):
     if request.method == 'POST':
         form = EmployeeCreationForm(request.POST)
@@ -38,27 +45,38 @@ def create_employee(request):
             employee.save()
             send_setup_email(employee)
             return redirect('admin_dashboard')
+        else:
+            logger.error(f"Form errors: {form.errors}")
     else:
         form = EmployeeCreationForm()
     return render(request, 'create_employee.html', {'form': form})
 
+# Helper function to send the setup email to the new employee
 def send_setup_email(employee):
     token = default_token_generator.make_token(employee)
     uid = urlsafe_base64_encode(force_bytes(employee.pk))
     link = reverse('setup_account', kwargs={'uidb64': uid, 'token': token})
     full_link = f"https://tikmedine.com{link}"
-    send_mail(
-        'Set Up Your Account',
-        f'Hello {employee.first_name},\n\nPlease click the link to set up your account: {full_link}\nYour username: {employee.username}\n\nBest regards,\nAdmin Team',
-        'tikmedine24@gmail.com',
-        [employee.email]
-    )
+    
+    logger.debug(f"Setup account link: {full_link}")
+    
+    try:
+        send_mail(
+            'Set Up Your Account',
+            f'Hello {employee.first_name},\n\nPlease click the link to set up your account: {full_link}\nYour username: {employee.username}\n\nBest regards,\nAdmin Team',
+            'tikmedine24@gmail.com',
+            [employee.email]
+        )
+    except Exception as e:
+        logger.error(f"Failed to send email to {employee.email}: {e}")
 
+# View to handle account setup based on the unique token
 def setup_account(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         employee = Employee.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, Employee.DoesNotExist):
+        logger.error(f"Employee with UID {uidb64} not found or invalid UID.")
         employee = None
 
     if employee is not None and default_token_generator.check_token(employee, token):
@@ -74,6 +92,8 @@ def setup_account(request, uidb64, token):
                 employee.security_answer_3 = form.cleaned_data['security_answer_3']
                 employee.save()
                 return redirect('admin_login')
+            else:
+                logger.error(f"Form errors: {form.errors}")
         else:
             form = SetupAccountForm()
         return render(request, 'setup_account.html', {'form': form, 'employee': employee})

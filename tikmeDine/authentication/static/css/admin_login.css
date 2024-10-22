@@ -2,7 +2,34 @@ body, html {
   height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #eee;
+  background-color: #f8f9fa;
+}
+
+/* Tikme-logo */
+.tikme-logo {
+  width: 100%;          /* Set width to 100% for smaller screens */
+  height: auto;         /* Maintain aspect ratio by setting height to auto */
+  max-width: 600px;     /* Limit max width for larger screens */
+  max-height: 180px;    /* Limit max height to maintain size */
+  object-fit: cover;    /* Ensure the image fills the area correctly without distortion */
+  display: block;       /* Ensure the image is displayed as a block element */
+  margin: 20px auto;    /* Center the logo with some margin */
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 768px) {
+  .tikme-logo {
+    max-height: 150px;  /* Increase max height on smaller screens */
+    max-width: 90%;      /* Limit width to 90% of the container */
+  }
+}
+
+/* Adjust for extra-small screens */
+@media (max-width: 480px) {
+  .tikme-logo {
+    max-height: 100px;   /* Further reduce max height for extra-small screens */
+    max-width: 90%;       /* Keep width at 90% */
+  }
 }
 
 /* Gradient for the right panel */
@@ -77,7 +104,7 @@ body, html {
 /* Style for the horizontal line */
 .horizontal-line {
   height: 2px; /* Height of the horizontal line */
-  background-color: #333333; /* Line color */
+  background-color: #8A0EB5; /* Line color */
   margin: 1rem auto; /* Centering and spacing */
   width: 100%; /* Full width */
   max-width: 500px; /* Maximum width of the line */
@@ -117,11 +144,11 @@ body, html {
 /* Adjust container width to be larger */
 .container {
   max-width: 80%; /* Wider container */
+  margin: 0 auto;
 }
 
 /* Custom class for red text */
 .text-login {
-
   color: #d8363a;
   font-weight: bold; /* Make text bold */
 }
