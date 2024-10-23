@@ -1,6 +1,6 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -9,6 +9,8 @@ from django.contrib.auth.tokens import default_token_generator
 from .models import Employee
 from .forms import EmployeeCreationForm, SetupSecurityQuestionsForm, SetupPasswordForm
 import logging
+
+
 
 logger = logging.getLogger(__name__)
 
@@ -35,21 +37,109 @@ def admin_login(request):
             return render(request, 'admin_login.html', {'error': 'Invalid username or password'})  # Handle invalid login
     return render(request, 'admin_login.html')
 
-# View to create a new employee and send account setup email
-def create_employee(request):
+def system_admin_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('system_admin_dashboard')  # Redirect to system admin dashboard
+    return render(request, 'system_admin_login.html')
+
+@login_required
+def system_admin_dashboard(request):
     if request.method == 'POST':
         form = EmployeeCreationForm(request.POST)
         if form.is_valid():
-            employee = form.save(commit=False)
-            employee.set_unusable_password()
-            employee.save()
-            send_setup_email(employee)
-            return redirect('admin_dashboard')
-        else:
-            logger.error(f"Form errors: {form.errors}")
+            form.save()
+            return redirect('system_admin_dashboard')
     else:
         form = EmployeeCreationForm()
-    return render(request, 'create_employee.html', {'form': form})
+    
+    employees = Employee.objects.all()
+    return render(request, 'system_admin_dashboard.html', {'employees': employees, 'form': form})
+
+def change_status(request, employee_id, status):
+    employee = Employee.objects.get(id=employee_id)
+    employee.account_status = status
+    employee.save()
+    return redirect('system_admin_dashboard')
+
+def send_email(request, employee_id, email_type):
+    employee = Employee.objects.get(id=employee_id)
+    email_subject, email_body = "", ""
+    
+    if email_type == 'onboarding':
+        email_subject = "Welcome to [Company/Organization]!"
+        email_body = f"""
+        Hi {employee.first_name},
+        
+        Welcome to [Company/Organization]! We’re excited to have you as part of our team.
+        
+        To complete your account setup, please follow the link below:
+        [Complete Account Setup Link]
+        
+        This link will guide you through the process of setting up your security questions and creating your password. For security purposes, the link is valid for 24 hours. If it expires before you have a chance to set up your account, you can request a new link through our portal.
+        
+        If you have any questions or need assistance during the setup process, feel free to reach out to us at [Support Email/Phone Number].
+        
+        We look forward to seeing you on board!
+        
+        Best regards,
+        [Your Name/Team]
+        [Company/Organization]
+        
+        Note: Please do not reply to this email. This mailbox is not monitored.
+        """
+    elif email_type == 'password_reset':
+        email_subject = "Password Reset Request"
+        email_body = f"""
+        Hi {employee.first_name},
+        
+        We received a request to reset the password for your account associated with this email address. If you made this request, please click the link below to reset your password:
+        [Reset Password Link]
+        
+        For security reasons, this link will expire in 24 hours. If the link expires, you can request a new one through the "Forgot Password" link on the login page.
+        
+        If you did not request a password reset, please ignore this email or contact support immediately at [Support Email/Phone].
+        
+        Thank you,
+        [Your Company/Team Name]
+        
+        Note: Please do not reply to this email. This mailbox is not monitored.
+        """
+    elif email_type == 'account_unlock':
+        email_subject = "Account Unlock Request"
+        email_body = f"""
+        Hi {employee.first_name},
+        
+        Your account has been unlocked. Please follow the link below to complete your account setup:
+        [Complete Account Setup Link]
+        
+        This link will guide you through the process of setting up your security questions and creating your password. For security purposes, the link is valid for 24 hours. If it expires before you have a chance to set up your account, you can request a new link through our portal.
+        
+        If you have any questions or need assistance during the setup process, feel free to reach out to us at [Support Email/Phone Number].
+        
+        We look forward to seeing you on board!
+        
+        Best regards,
+        [Your Name/Team]
+        [Company/Organization]
+        
+        Note: Please do not reply to this email. This mailbox is not monitored.
+        """
+    
+    send_mail(
+        email_subject,
+        email_body,
+        'from@example.com',
+        [employee.email],
+        fail_silently=False,
+    )
+    
+    return redirect('system_admin_dashboard')
+
 
 # Helper function to send the setup email to the new employee
 def send_setup_email(employee):
@@ -110,3 +200,7 @@ def setup_password(request, uidb64, token):
         return render(request, 'setup_password.html', {'form': form, 'employee': employee})
     else:
         return render(request, 'invalid_link.html')
+    
+
+
+
