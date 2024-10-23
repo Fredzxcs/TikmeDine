@@ -27,11 +27,10 @@ body {
 .left-panel {
     display: flex;
     flex-direction: column;
-  /*  justify-content: center; */
     align-items: center;
     text-align: center;
     padding: 2rem; /* Increased padding */
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 /* Tikme Logo Styling */
@@ -96,7 +95,169 @@ body {
 /* Right Panel Styling */
 .right-panel img {
     width: 120%; /* Increased image width */
-    height: 100%;
+    height: auto; /* Maintain aspect ratio */
     object-fit: cover;
     border-radius: 0 0.25rem 0.25rem 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .main-container {
+        max-width: 950px;
+        padding: 16px;
+        height: auto;
+        display: flex;
+    }
+
+    .left-panel {
+        padding: 16px;
+        max-height: 700px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .right-panel {
+        flex: 1; /* Allow the right panel to take up remaining space */
+        padding: 0; /* Remove padding to utilize space */
+        max-height: 700px;
+        overflow: hidden;
+        display: flex; /* Enable flex for organization */
+        justify-content: center; /* Center content horizontally */
+        align-items: center; /* Center content vertically */
+        position: relative; /* Enable absolute positioning of image */
+    }
+
+    .heading {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    .option-button {
+        width: 490px;
+        height: 60px;
+        padding: 12px;
+        margin-bottom: 10px;
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .option-button:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .divider {
+        margin: 20px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .tikme-logo {
+        max-height: 120px;
+        max-width: 80%;
+        margin: 0;
+    }
+
+    .option-button {
+        width: 200px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .heading {
+        font-size: 14px;
+    }
+
+    .divider {
+        margin-bottom: 15px;
+    }
+
+    .left-panel {
+        padding: 8px;
+    }
+
+    .right-panel {
+        max-height: 250px; /* Limit max height for right panel on small screens */
+        justify-content: flex-start; /* Align content to the top */
+        padding: 0; /* Remove padding */
+    }
+
+    .right-panel img {
+        max-height: 100%; /* Limit max height to 100% of the right panel */
+        width: 100%; /* Make image take full width */
+        height: auto; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensure image covers its area */
+        margin: 0; /* Remove margin */
+    }
+}
+
+/* Additional Responsive Adjustments for 1366px Width */
+@media (max-width: 1366px) {
+    .main-container {
+        max-height: 810px; /* Overall max height for main container */
+        overflow: hidden;
+        max-width: 950px;
+        display: flex;
+    }
+
+    .left-panel {
+        padding: 16px;
+        max-height: 600px; /* Keep the left panel's max height */
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .right-panel {
+        flex: 1;
+        padding: 0; /* Remove padding */
+        max-height: 600px; /* Increased max height to better fit the container */
+        overflow: hidden;
+        display: flex; /* Enable flex for organization */
+        justify-content: center; /* Center content horizontally */
+        align-items: center; /* Center content vertically */
+        position: relative; /* Enable absolute positioning of image */
+        margin: 0; /* Remove any margins */
+    }
+
+    .heading {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    .option-button {
+        width: 390px;
+        padding: 15px;
+        font-size: 16px;
+        margin-bottom: 15px;
+        height: 100px;
+    }
+
+    .divider {
+        margin: 20px;
+    }
+
+    .right-panel img {
+        max-height: 100%; /* Allow the image to use the full height of the panel */
+        width: 100%; /* Ensure the image takes up the full width of the panel */
+        height: 100%; /* Ensure the image fills the height */
+        object-fit: cover; /* Cover the area fully without distortion */
+        margin: 0; /* Remove any margin around the image */
+        border-radius: 0; /* Remove border radius to avoid any empty corners */
+    }
+
+    /* Tikme logo size adjustments */
+    .tikme-logo {
+        max-width: 300px; /* Adjust the logo's width */
+        max-height: 120px;  /* Adjust the logo's height */
+        margin: 0; /* Ensure no margins affect the logo */
+    }
 }
