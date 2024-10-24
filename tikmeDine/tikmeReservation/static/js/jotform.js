@@ -1613,7 +1613,7 @@ var JotForm = {
 
                 if (isPreview) {
                     this.handlePreview(getQuerystring('filled') === 'true');
-                } else if(this.initializing) {
+                } else if(this.initializing && this.isFormViewTrackingAllowed) {
                     this.track(_uuid);
                 }
 
