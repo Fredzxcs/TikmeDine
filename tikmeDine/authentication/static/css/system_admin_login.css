@@ -54,6 +54,24 @@ body {
   margin-left: -10%;
 }
 
+.password-container {
+  position: relative;
+}
+
+.password-container .eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.error {
+  color: red;        /* Set the text color to red */
+  font-size: 14px;  /* Adjust the font size if needed */
+  margin: 10px 0;   /* Add some margin for spacing */
+}
+
 @media(max-width: 575.98px) {
   .container {
     flex-direction: column;
@@ -106,7 +124,6 @@ body {
 .login-form p {
   margin: 0 0 10px 0;
   text-align: left;
-  color: #666666;
   font-size: 15px;
 }
 
@@ -174,3 +191,4 @@ body {
   color: #ffffff;
   box-shadow: inset 250px 0 0 0 #8A0EB5;
 }
+

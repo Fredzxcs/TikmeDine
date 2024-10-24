@@ -3,6 +3,7 @@
 
 {% block extra_css %}
 <link href="{% static 'css/includes_system_admin_dashboard.css' %}" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -41,33 +42,37 @@
               <td>{{ employee.job_title }}</td>
               <td>{{ employee.account_status }}</td>
               <td>
-                  <!-- Account Status Actions -->
-                  <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="accountStatusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Actions
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="emailActionsDropdown">
-                        <div class="dropdown-menu" aria-labelledby="emailActionsDropdown">
-                            <a class="dropdown-item" href="{% url 'send_onboarding_email' employee.id %}">Onboarding</a>
-                            <a class="dropdown-item" href="{% url 'send_reset_password_email' employee.id %}">Password Reset</a>
-                            <a class="dropdown-item" href="{% url 'send_account_reactivation_email' employee.id %}">Account Unlock</a>
-                        </div>                        
-                    </div>                    
-                  </div>
-              </td>
-              <td>
-                  <!-- Email Actions -->
-                  <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="emailActionsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Email Actions
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="emailActionsDropdown">
-                          <a class="dropdown-item" href="#" onclick="sendEmail('{{ employee.id }}', 'onboarding')">Onboarding</a>
-                          <a class="dropdown-item" href="#" onclick="sendEmail('{{ employee.id }}', 'password_reset')">Password Reset</a>
-                          <a class="dropdown-item" href="#" onclick="sendEmail('{{ employee.id }}', 'account_unlock')">Account Unlock</a>
-                      </div>
-                  </div>
-              </td>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="accountStatusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" {% if employee.account_status == 'pending' %}disabled{% endif %}>
+                        Actions
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="accountStatusDropdown">
+                        <a class="dropdown-item" href="{% url 'change_status' employee.id 'active' %}">Active</a>
+                        <a class="dropdown-item" href="{% url 'change_status' employee.id 'inactive' %}">Inactive</a>
+                        <a class="dropdown-item" href="{% url 'change_status' employee.id 'suspended' %}">Suspended</a>
+                    </div>
+                </div>
+            </td>
+            
+            <td>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="emailActionsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Email Actions
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="emailActionsDropdown">
+                        {% if employee.account_status == 'pending' %}
+                        <a class="dropdown-item btn-violet" href="{% url 'send_onboarding_email' employee.id %}" onclick="confirmOnboarding('{{ employee.email }}')">Onboarding</a>
+                        <a class="dropdown-item btn-gray" href="#" onclick="return false;" style="pointer-events: none; cursor: default;">Password Reset</a>
+                        <a class="dropdown-item btn-gray" href="#" onclick="return false;" style="pointer-events: none; cursor: default;">Account Unlock</a>
+                        {% else %}
+                        <a class="dropdown-item" href="{% url 'send_reset_password_email' employee.id %}">Password Reset</a>
+                        <a class="dropdown-item" href="{% url 'send_account_reactivation_email' employee.id %}">Account Unlock</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </td>
+            
+            
           </tr>
           {% endfor %}
       </tbody>
@@ -83,7 +88,7 @@
                   </button>
               </div>
               <div class="modal-body">
-                  <form method="post" action="{% url 'system_admin_dashboard' %}">
+                  <form method="post" action="{% url 'add_employee' %}">
                       {% csrf_token %}
                       <div class="form-group">
                           <label for="username">Username</label>
@@ -111,13 +116,29 @@
           </div>
       </div>
   </div>
+  <!-- Confirmation Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="confirmationModalLabel">Confirm Email</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <p>Are you sure you want to send the onboarding email to <span id="employeeEmail"></span>?</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-success" onclick="sendOnboardingEmail()">Confirm</button>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script src="{% static 'js/admin_login.js' %}"></script>
 {% endblock %}
-
-
-
-

@@ -1,6 +1,11 @@
 from django import forms
 from .models import Employee
 
+class EmployeeCreationForm(forms.ModelForm):
+    class Meta:
+        model = Employee
+        fields = ('username', 'email', 'first_name', 'last_name', 'job_title')
+        
 class SetupSecurityQuestionsForm(forms.Form):
     SECURITY_QUESTIONS = [
         ('What was the name of your first pet?', 'What was the name of your first pet?'),

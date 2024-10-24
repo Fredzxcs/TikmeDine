@@ -88,3 +88,16 @@
 .btn-primary:hover {
     background-color: #4a256e;
 }
+
+
+.btn-violet {
+    background-color: #4a256e;
+    color: white;
+}
+
+  
+.btn-gray {
+    background-color: gray;
+    color: white;
+}
+

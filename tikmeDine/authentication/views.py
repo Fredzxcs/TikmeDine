@@ -47,6 +47,8 @@ def system_admin_login(request):
         if user is not None:
             login(request, user)
             return redirect('system_admin_dashboard')  # Redirect to system admin dashboard
+        else:
+            return render(request, 'system_admin_login.html', {'error': 'Invalid username or password'})  # Handle invalid login
     return render(request, 'system_admin_login.html')
 
 @login_required
@@ -62,14 +64,51 @@ def system_admin_dashboard(request):
     employees = Employee.objects.all()
     return render(request, 'system_admin_dashboard.html', {'employees': employees, 'form': form})
 
+def add_employee(request):
+    if request.method == 'POST':
+        form = EmployeeCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('system_admin_dashboard')
+    else:
+        form = EmployeeCreationForm()
+    return render(request, 'system_admin_dashboard.html', {'form': form, 'employees': Employee.objects.all()})
+
+
 def change_status(request, employee_id, status):
-    employee = Employee.objects.get(id=employee_id)
+    employee = get_object_or_404(Employee, id=employee_id)
+    
+    if status not in ['active', 'inactive', 'suspended']:
+        # Handle invalid status
+        return redirect('system_admin_dashboard')
+    
     employee.account_status = status
     employee.save()
     return redirect('system_admin_dashboard')
 
+def change_status(request, employee_id, status):
+    employee = get_object_or_404(Employee, id=employee_id)
+    employee.account_status = status
+    employee.save()
+    return redirect('system_admin_dashboard')
+
+def send_onboarding_email(request, employee_id):
+    employee = get_object_or_404(Employee, id=employee_id)
+    onboarding_email(employee)
+    return redirect('system_admin_dashboard')
+
+def send_reset_password_email(request, employee_id):
+    employee = get_object_or_404(Employee, id=employee_id)
+    # Logic to send reset password email
+    return redirect('system_admin_dashboard')
+
+def send_account_reactivation_email(request, employee_id):
+    employee = get_object_or_404(Employee, id=employee_id)
+    # Logic to send account reactivation email
+    return redirect('system_admin_dashboard')
+
 # Function to handle onboarding email setup
-def send_onboarding_email(employee):
+def onboarding_email(employee):
     token = default_token_generator.make_token(employee)
     uid = urlsafe_base64_encode(force_bytes(employee.pk))
     link = reverse('setup_account', kwargs={'uidb64': uid, 'token': token})
