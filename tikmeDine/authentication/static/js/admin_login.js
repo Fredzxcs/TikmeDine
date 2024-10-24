@@ -38,3 +38,8 @@ function toggleSidebar() {
         mainContent.style.marginLeft = '250px';
     }
 }
+
+function showPasswordSection() {
+    document.getElementById('security-questions').style.display = 'none';
+    document.getElementById('password-section').style.display = 'block';
+}

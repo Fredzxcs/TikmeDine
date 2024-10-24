@@ -46,11 +46,13 @@
                       <button class="btn btn-secondary dropdown-toggle" type="button" id="accountStatusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Actions
                       </button>
-                      <div class="dropdown-menu" aria-labelledby="accountStatusDropdown">
-                          <a class="dropdown-item" href="#" onclick="changeStatus('{{ employee.id }}', 'active')">Active</a>
-                          <a class="dropdown-item" href="#" onclick="changeStatus('{{ employee.id }}', 'locked')">Locked</a>
-                          <a class="dropdown-item" href="#" onclick="changeStatus('{{ employee.id }}', 'suspended')">Suspended</a>
-                      </div>
+                      <div class="dropdown-menu" aria-labelledby="emailActionsDropdown">
+                        <div class="dropdown-menu" aria-labelledby="emailActionsDropdown">
+                            <a class="dropdown-item" href="{% url 'send_onboarding_email' employee.id %}">Onboarding</a>
+                            <a class="dropdown-item" href="{% url 'send_reset_password_email' employee.id %}">Password Reset</a>
+                            <a class="dropdown-item" href="{% url 'send_account_reactivation_email' employee.id %}">Account Unlock</a>
+                        </div>                        
+                    </div>                    
                   </div>
               </td>
               <td>
