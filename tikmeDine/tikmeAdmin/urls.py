@@ -1,7 +1,8 @@
+# tikmeReservation/urls.py
 from django.urls import path
-from . import views
+from .views import admin_dashboard
 
 urlpatterns = [
-    path('', views.adminDashboard, name='adminDashboard'),  # Adminpage
-
+    path('admin_dashboard/', admin_dashboard, name='admin_dashboard'),
+    path('accounts/', include('authentication.urls')),
 ]
