@@ -7,15 +7,33 @@ class EmployeeCreationForm(forms.ModelForm):
         model = Employee
         fields = ('username', 'email', 'first_name', 'last_name')
 
-class SetupAccountForm(forms.Form):
-    security_question_1 = forms.CharField(label="What is your childhood’s nickname?", max_length=255)
-    security_answer_1 = forms.CharField(widget=forms.PasswordInput)
-    security_question_2 = forms.CharField(label="What is your grandmother’s maiden name?", max_length=255)
-    security_answer_2 = forms.CharField(widget=forms.PasswordInput)
-    security_question_3 = forms.CharField(label="What is your favorite sport?", max_length=255)
-    security_answer_3 = forms.CharField(widget=forms.PasswordInput)
-    password = forms.CharField(widget=forms.PasswordInput, help_text="Password must be at least 8 characters and include a mix of letters, numbers, and symbols.")
-    confirm_password = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
+class SetupSecurityQuestionsForm(forms.Form):
+    security_answer_1 = forms.CharField(
+        label="What is your childhood’s nickname?",
+        max_length=255,
+        widget=forms.TextInput(attrs={'placeholder': 'Type your answer here...'})
+    )
+    security_answer_2 = forms.CharField(
+        label="What is your grandmother’s maiden name?",
+        max_length=255,
+        widget=forms.TextInput(attrs={'placeholder': 'Type your answer here...'})
+    )
+    security_answer_3 = forms.CharField(
+        label="What is your favorite sport?",
+        max_length=255,
+        widget=forms.TextInput(attrs={'placeholder': 'Type your answer here...'})
+    )
+
+
+class SetupPasswordForm(forms.Form):
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+        help_text="Password must be at least 8 characters and include a mix of letters, numbers, and symbols."
+    )
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput,
+        label="Confirm Password"
+    )
 
     def clean(self):
         cleaned_data = super().clean()

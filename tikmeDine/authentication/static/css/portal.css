@@ -54,7 +54,7 @@ body {
 /* Heading Styling */
 .heading {
     font-size: 1.2rem; /* Increased font size */
-    color: #344767;
+    color: #344767; 
     margin-bottom: 1.5rem; /* Increased bottom margin */
 }
 
@@ -76,7 +76,9 @@ body {
     align-items: center;
     height: 90px; /* Increased button height */
     width: 400px; /* Increased button width */
+ 
 }
+
 
 .button-reservation {
     background-image: url('/static/assets/images/about-1.png');
@@ -86,6 +88,9 @@ body {
 }
 .button-finance {
     background-image: url('/static/assets/images/about-3.png');
+}
+.button-system-admin-login {
+    background-image: url('/static/assets/images/about-1.png');
 }
 
 .option-button:hover {
@@ -230,19 +235,21 @@ body {
 
     .heading {
         font-size: 18px;
-        margin-bottom: 5px;
+        margin-top: 30px;
+        margin-bottom: -5px;
     }
 
     .option-button {
-        width: 390px;
+        width: 350px;
         padding: 15px;
         font-size: 16px;
-        margin-bottom: 15px;
-        height: 100px;
+        margin-bottom: 5px;
+        height: 80px;
+       
     }
 
     .divider {
-        margin: 20px;
+        margin: -20px 20px;
     }
 
     .right-panel img {

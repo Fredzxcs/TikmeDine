@@ -1,0 +1,121 @@
+{% extends 'baseAuth.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link href="{% static 'css/includes_system_admin_dashboard.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="sidebar-wrapper">
+  {% include 'includes/system_admin_sidebar.html' %}
+</div>
+<div class="main-content">
+  <h2>System Administrator Dashboard</h2>
+  <!-- Add Employee Button -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeModal">
+      Add Employee
+  </button>
+  <!-- Employee Table -->
+  <table class="table table-bordered mt-4">
+      <thead>
+          <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Job Title</th>
+              <th>Account Status</th>
+              <th>Actions</th>
+              <th>Email Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for employee in employees %}
+          <tr>
+              <td>{{ employee.id }}</td>
+              <td>{{ employee.username }}</td>
+              <td>{{ employee.first_name }}</td>
+              <td>{{ employee.last_name }}</td>
+              <td>{{ employee.email }}</td>
+              <td>{{ employee.job_title }}</td>
+              <td>{{ employee.account_status }}</td>
+              <td>
+                  <!-- Account Status Actions -->
+                  <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="accountStatusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Actions
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="accountStatusDropdown">
+                          <a class="dropdown-item" href="#" onclick="changeStatus('{{ employee.id }}', 'active')">Active</a>
+                          <a class="dropdown-item" href="#" onclick="changeStatus('{{ employee.id }}', 'locked')">Locked</a>
+                          <a class="dropdown-item" href="#" onclick="changeStatus('{{ employee.id }}', 'suspended')">Suspended</a>
+                      </div>
+                  </div>
+              </td>
+              <td>
+                  <!-- Email Actions -->
+                  <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="emailActionsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Email Actions
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="emailActionsDropdown">
+                          <a class="dropdown-item" href="#" onclick="sendEmail('{{ employee.id }}', 'onboarding')">Onboarding</a>
+                          <a class="dropdown-item" href="#" onclick="sendEmail('{{ employee.id }}', 'password_reset')">Password Reset</a>
+                          <a class="dropdown-item" href="#" onclick="sendEmail('{{ employee.id }}', 'account_unlock')">Account Unlock</a>
+                      </div>
+                  </div>
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  <!-- Add Employee Modal -->
+  <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="addEmployeeModalLabel">Add Employee</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form method="post" action="{% url 'system_admin_dashboard' %}">
+                      {% csrf_token %}
+                      <div class="form-group">
+                          <label for="username">Username</label>
+                          <input type="text" class="form-control" id="username" name="username" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="first_name">First Name</label>
+                          <input type="text" class="form-control" id="first_name" name="first_name" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="last_name">Last Name</label>
+                          <input type="text" class="form-control" id="last_name" name="last_name" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="email" class="form-control" id="email" name="email" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="job_title">Job Title</label>
+                          <input type="text" class="form-control" id="job_title" name="job_title" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Save</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/admin_login.js' %}"></script>
+{% endblock %}
+
+
+
+

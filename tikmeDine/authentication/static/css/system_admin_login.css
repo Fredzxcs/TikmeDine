@@ -1,0 +1,37 @@
+/* authentication/static/css/admin_login.css */
+
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 600px; /* Increased from 400px to 600px */
+    padding: 20px; /* Added padding for better spacing */
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background-color: #5e3181;
+    color: white;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+}
+
+.btn-primary {
+    background-color: #5e3181;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #4a256e;
+}

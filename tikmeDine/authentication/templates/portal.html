@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link href="{% static 'css/portal.css' %}" rel="stylesheet">
 {% endblock %}
 
@@ -19,14 +20,19 @@
           Reservation and Booking System
         </button>
       </a>
-      <a href="">
+      <a href="#">
         <button class="option-button button-logistics">
           Logistics Management System
         </button>
       </a>
-      <a href="">
+      <a href="#">
         <button class="option-button button-finance">
           Finance Management System
+        </button>
+      </a>
+      <a href="{% url 'system_admin_login' %}">
+        <button class="option-button button-system-admin-login">
+          System Administrator System
         </button>
       </a>
     </div>
@@ -39,4 +45,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 {% endblock %}
