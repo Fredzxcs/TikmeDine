@@ -1,11 +1,10 @@
 body, html {
-  height: 100hv;
+  height: 100vh; /* Fix typo from 100hv to 100vh */
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
-  
 }
 
 /* Tikme-logo */
@@ -41,7 +40,7 @@ body, html {
   border: none;
   font-size: 1.2rem; /* Increase button text size */
   padding: 10px 15px; /* Adjust button size */
-  margin: 5px 0; /* Add spacing between buttons */
+  margin: 0px 0; /* Add spacing between buttons */
   width: 100%; /* Full width for buttons */
 }
 
@@ -51,6 +50,8 @@ body, html {
   font-size: 1.2rem; /* Increase button text size */
   padding: 10px 15px; /* Adjust button size */
   width: 100%; /* Full width for buttons */
+  text-align: center; /* Ensure the button's text is centered */
+  display: block;
 }
 
 /* Increase input size */
@@ -115,6 +116,29 @@ p {
 
 .image-slider img.hidden {
   opacity: 0;
+}
+
+/* Text styles for the "Forgot Password" and "Need help?" section */
+.text-login-section {
+  text-align: center; /* Center align text */
+  margin-top: 20px; /* Add spacing above the section */
+}
+
+.text-login a {
+  color: #d8363a; /* Adjust color for the link */
+  font-weight: bold; /* Make text bold */
+  margin-bottom: 10px; /* Add spacing below text */
+  text-decoration: underline; /* Add underline to the link */
+}
+
+.text-login a:hover {
+  color: #b44593; /* Optional: Change color on hover */
+}
+
+a.btn-outline-danger {
+  display: block;
+  text-align: center;
+  width: 100%; /* Full width button */
 }
 
 /* Responsive adjustments for 1366px */
@@ -286,9 +310,3 @@ p {
   margin: 0 auto;
   width: 100%; /* Default width to fit the screen */
 }
-
-/* Custom class for red text */
-.text-login {
-  color: #d8363a;
-  font-weight: bold; /* Make text bold */
-}  
