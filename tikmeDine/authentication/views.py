@@ -86,12 +86,6 @@ def change_status(request, employee_id, status):
     employee.save()
     return redirect('system_admin_dashboard')
 
-def change_status(request, employee_id, status):
-    employee = get_object_or_404(Employee, id=employee_id)
-    employee.account_status = status
-    employee.save()
-    return redirect('system_admin_dashboard')
-
 def send_onboarding_email(request, employee_id):
     employee = get_object_or_404(Employee, id=employee_id)
     onboarding_email(employee)
