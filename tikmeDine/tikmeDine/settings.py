@@ -3,6 +3,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
 
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,7 +43,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'authentication.middleware.JWTMiddleware',  # Add your middleware here
+    'authentication.middleware.JWTMiddleware',
+    
 ]
 
 REST_FRAMEWORK = {
@@ -85,6 +87,8 @@ WSGI_APPLICATION = 'tikmeDine.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
+
 
 DATABASES = {
     'default': {
@@ -131,7 +135,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+
 STATIC_URL = '/static/'
+
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'tikmeReservation/static'),

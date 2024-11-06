@@ -1,0 +1,22 @@
+databases:
+  - name: tikmeDineDB  # Change `mysitedb` to `tikmeDineDB` for clarity
+    plan: free
+    databaseName: tikmedine  # Change `mysite` to your Django database name (e.g., `tikmedine`)
+    user: tikmedineuser      # Change `mysite` to a user name that corresponds with your project
+
+services:
+  - type: web
+    plan: free
+    name: tikmeDine          # Change `mysite` to your project name (`tikmeDine`)
+    runtime: python
+    buildCommand: "./build.sh"  # Ensure `build.sh` exists and is executable
+    startCommand: "python -m gunicorn tikmeDine.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tikmeDineDB
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
