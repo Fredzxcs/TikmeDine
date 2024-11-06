@@ -16,7 +16,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "FALSE").lower() == "true"
 
 # Add this to your settings.py
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS','').split(",")
+ALLOWED_HOSTS = ['tikmedine.onrender.com', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
