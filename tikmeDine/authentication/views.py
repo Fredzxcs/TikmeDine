@@ -39,7 +39,7 @@ def portal(request):
     available_modules = [
         {'name': 'Reservation and Booking System', 'url': '/api-admin/admin_login/'},
         {'name': 'Logistics Management System', 'url': '/logistics/admin_login/'},
-        {'name': 'Finance Management System', 'url': '/finance/admin_login/'},
+        {'name': 'Finance Management System', 'url': 'https://capstone-financemanagement.onrender.com/'},
         {'name': 'System Admin', 'url': '/api-auth/system_admin_login/'}
     ]
     return render(request, 'portal.html', {'available_modules': available_modules})
