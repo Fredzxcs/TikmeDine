@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Standard Library Imports
 import logging
 from datetime import datetime, timedelta
@@ -132,7 +133,16 @@ def reset_password(request, uidb64, token):
 
     return render(request, 'reset_password.html', {'password_form': password_form})
 
+=======
+# tikmeReservation/views.py
+from django.shortcuts import render
+>>>>>>> 32624d54abe0064c6fc4ff8e7d5dc0df463c0d3f
 
-@login_required
 def admin_dashboard(request):
     return render(request, 'admin_dashboard.html')
+<<<<<<< HEAD
+=======
+
+def create_reservation(request):
+    return render(request, 'create_reservation.html')
+>>>>>>> 32624d54abe0064c6fc4ff8e7d5dc0df463c0d3f

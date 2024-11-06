@@ -1112,6 +1112,10 @@ var JotForm = {
                 } else {
                   this.initEmbeddedAgent();
                 }
+
+                if (document.get.agentPhoneCall == 1) {
+                    appendHiddenInput("chatID", document.get.chatID);
+                }
                 
                 if (typeof window.initializeSignaturePad === 'function') {
                     window.initializeSignaturePad();

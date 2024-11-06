@@ -30,4 +30,24 @@
             }
         }
         
+        function loadCreateReservation() {
+            event.preventDefault(); // Prevent default link navigation
         
+            fetch("/create_reservation/")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not OK');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    // Load the fetched content into the main-content area
+                    const mainContent = document.getElementById('main-content');
+                    if (mainContent) {
+                        mainContent.innerHTML = html;
+                    } else {
+                        console.error("Element with ID 'main-content' not found.");
+                    }
+                })
+                .catch(error => console.error('Error loading reservation page:', error));
+        }
