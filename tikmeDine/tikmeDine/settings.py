@@ -16,7 +16,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "FALSE").lower() == "true"
 
 # Add this to your settings.py
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split("")
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS','').split(",")
 
 
 # Application definition
