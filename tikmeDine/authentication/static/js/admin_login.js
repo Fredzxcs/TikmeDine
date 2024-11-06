@@ -30,16 +30,7 @@ function sendEmail(employeeId, emailType) {
     console.log(`Send ${emailType} email to employee ${employeeId}`);
 }
 
-function toggleSidebar() {
-    var sidebar = document.querySelector('.sidebar');
-    var mainContent = document.querySelector('.main-content');
-    if (sidebar && mainContent) {
-        sidebar.classList.toggle('collapsed');
-        mainContent.style.marginLeft = sidebar.classList.contains('collapsed') ? '60px' : '250px';
-    } else {
-        console.error('Sidebar or Main Content not found');
-    }
-}
+
 
 function showPasswordSection() {
     var securityQuestions = document.getElementById('security-questions');
@@ -62,12 +53,3 @@ function togglePassword() {
     }
 }
 
-// Ensure the modal triggers properly
-$('#addEmployeeModal').on('shown.bs.modal', function () {
-    var usernameField = $('#username');
-    if (usernameField) {
-        usernameField.trigger('focus');
-    } else {
-        console.error('Username field not found in modal');
-    }
-});

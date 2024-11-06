@@ -66,7 +66,8 @@
     cursor: pointer;
 }
 
-.sidebar a, .dropdown-btn {
+.sidebar a,
+.dropdown-btn {
     padding: 10px 15px;
     text-decoration: none;
     font-size: 18px;
@@ -83,10 +84,12 @@
     transition: background-color 0.3s, border-radius 0.3s, margin 0.3s; /* Smooth transition */
     overflow: hidden; /* Prevent background overflow */
     box-sizing: border-box; /* Ensure padding and border are included in total width */
+    list-style: none; /* Remove bullet points */
 }
 
 /* Apply violet color only on hover */
-.sidebar a:hover, .dropdown-btn:hover {
+.sidebar a:hover,
+.dropdown-btn:hover {
     background-color: #61396f; /* Violet color */
     color: white !important;
     border-radius: 10px; /* Adjust this value for more or less rounding */
@@ -103,20 +106,24 @@
     align-items: center; /* Center icon vertically */
     justify-content: center; /* Center icon horizontally */
     width: 30px; /* Ensure the icon takes the full width of its container */
+    margin-right: 10px; /* Add space between icon and text */
 }
 
 /* Adjust icon and text alignment for collapsed sidebar */
-.sidebar.collapsed a, .sidebar.collapsed .dropdown-btn {
+.sidebar.collapsed a,
+.sidebar.collapsed .dropdown-btn {
     justify-content: center; /* Center icons */
     margin-right: 0;
     align-items: center;
 }
 
-.sidebar.collapsed a i, .sidebar.collapsed .dropdown-btn i {
+.sidebar.collapsed a i,
+.sidebar.collapsed .dropdown-btn i {
     margin-right: 0;
 }
 
-.sidebar.collapsed a span, .sidebar.collapsed .dropdown-btn span {
+.sidebar.collapsed a span,
+.sidebar.collapsed .dropdown-btn span {
     display: none; /* Hide text */
     align-items: center;
 }
@@ -161,4 +168,3 @@
 .sidebar.collapsed .sidebar-footer p {
     display: none; /* Hide logo and text */
 }
-    

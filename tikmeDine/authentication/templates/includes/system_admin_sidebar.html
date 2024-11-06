@@ -1,5 +1,10 @@
 <!-- authentication/templates/sidebar.html -->
 {% load static %}
+{% block extra_css %}
+<!-- System Admin Sidebar CSS -->
+<link rel="stylesheet" href="{% static 'css/system_admin_sidebar.css' %}">
+{% endblock %}
+ 
 <div class="sidebar-wrapper">
     <div class="sidebar">
         <div class="sidebar-header">
@@ -8,9 +13,7 @@
         </div>
         <ul>
             <li><a href="{% url 'system_admin_dashboard' %}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
-            <li><a href="#"><i class="fas fa-users"></i> <span>Manage Employees</span></a></li>
             <li><a href="#"><i class="fas fa-cogs"></i> <span>Settings</span></a></li>
-            <li><a href="#"><i class="fas fa-question-circle"></i> <span>Help</span></a></li>
             <li><a href="{% url 'system_admin_login' %}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
         </ul>
         <div class="sidebar-footer">

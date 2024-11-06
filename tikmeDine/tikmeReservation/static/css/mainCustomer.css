@@ -1,14 +1,3 @@
-
-.ff-secondary {
-    font-family: 'Pacifico', cursive;
-}
-
-
-/* logo tikme */
-.logo-container {
-    text-align: center;
-}
-
 /* Loader Style */
 .loading-container {
     position: fixed;
@@ -41,7 +30,13 @@
     z-index: -1; /* Place behind the icon */
 }
 
-/* Keyframes for spinning animation */
+/* Fade-out Effect */
+.fade-out {
+    opacity: 0; /* Make loader invisible */
+    transition: opacity 5s ease-out; /* Fade out duration */
+}
+
+/* Keyframes for Spinning Animation */
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -51,12 +46,7 @@
     }
 }
 
-/* Fade-out effect */
-.fade-out {
-    opacity: 0; /* Make loader invisible */
-    transition: opacity 5s ease-out; /* Fade out duration */
-}
-
+/* Main Text Animation */
 .main-text {
     font-size: 5rem;
     color: transparent; /* Start with no fill */
@@ -87,24 +77,11 @@
         color: transparent;
     }
     to {
-        color: #f8f8ff; /* Bright white */
-    }
-    to {
         color: #FFEA00; /* Bright yellow */
     }
 }
 
-@keyframes glow {
-    0% {
-        text-shadow: 0 0 10px #f8f8ff, 0 0 20px #f8f8ff, 0 0 30px #f8f8ff, 0 0 40px #f8f8ff;
-        color: #f8f8ff; /* Bright white */
-    }
-    100% {
-        text-shadow: 0 0 20px #A75BCA, 0 0 30px #A75BCA, 0 0 40px #A75BCA, 0 0 50px #A75BCA; /* Brighter violet */
-        color: #A75BCA; /* Bright violet */
-    }
-}
-
+/* Sub-text Animation */
 .sub-text {
     margin-top: -10px;
     margin-left: 220px;
@@ -125,7 +102,7 @@
     }
 }
 
-/* Flag-bar styling */
+/* Flag-bar Styling */
 .flag-bar {
     height: 4px;
     width: 410px;
@@ -136,7 +113,8 @@
     animation: barGlowCenter 2s ease-in-out forwards;
 }
 
-.flag-bar::before, .flag-bar::after {
+.flag-bar::before,
+.flag-bar::after {
     content: "";
     position: absolute;
     top: 0;
@@ -172,7 +150,7 @@
     animation: centerGlow 2s ease-in-out forwards;
 }
 
-/*** Button ***/
+/* Button Styling */
 .btn {
     font-family: 'Nunito', sans-serif;
     font-weight: 500;
@@ -182,7 +160,7 @@
 .btn.btn-primary,
 .btn.btn-secondary {
     background-color: #FEA116;
-    border-color:  #FEA116;
+    border-color: #FEA116;
     box-shadow: #333;
 }
 
@@ -191,32 +169,7 @@
     border-color: #333;
 }
 
-.btn-square {
-    width: 38px;
-    height: 38px;
-}
-
-.btn-sm-square {
-    width: 32px;
-    height: 32px;
-}
-
-.btn-lg-square {
-    width: 48px;
-    height: 48px;
-}
-
-.btn-square,
-.btn-sm-square,
-.btn-lg-square {
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: normal;
-    border-radius: 2px;
-}
-
+/* Home Section Styling */
 .home {
     min-height: 100vh;
     width: 100vw;
@@ -242,7 +195,6 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5); /* Adjust opacity (0.5) to control darkness */
-    
 }
 
 .home .wave {
@@ -288,7 +240,7 @@
     z-index: 0; /* Ensure it appears behind other elements */
 }
 
-/* Menu container */
+/* Menu Container */
 .menu-wrapper {
     background: #fff;
     border-radius: 20px;
@@ -296,37 +248,43 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Title styling */
-.menu-title {
-    font-size: 36px;
-    color: #FEA116;
-    font-family: 'Ingrid Darling', cursive;
-    text-align: center;
-}
-
-/* Scrollable menu area */
-.menu-items {
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-/* Style for each tab content */
+/* Menu Item */
 .menu-item {
-    padding: 15px 0;
-    border-bottom: 1px solid #ddd;
+    padding: 15px 10px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    position: relative; /* Allows positioning of the hover effect */
+    border-bottom: 2px solid #8A0EB5; /* Add a bottom border for separation */
 }
 
-/* Responsive image styling */
-.menu-item img {
-    border-radius: 50%;
-    width: 80px;
+.menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Light hover effect */
 }
 
-/* Columned layout */
-.menu-column {
-    padding-left: 15px;
-    padding-right: 15px;
+/* New addition for text */
+.menu-item h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    font-family: 'Nunito', sans-serif; /* Change font family */
 }
+
+/* Menu item price */
+.menu-item .price-text {
+    color: #FEA116; /* Set your desired color here */
+    font-weight: bold; /* Optional: Make it bold */
+}
+
+/* Menu container */
+.menu-items-container {
+    max-height: 600px; 
+    overflow-y: auto; 
+    overflow-x: hidden;
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    border-radius: 10px; 
+    margin-top: 15px; 
+}
+
 
 /* Adjustments for small screens */
 @media (max-width: 768px) {
@@ -575,6 +533,7 @@
 h2 {
     color: #ff9800;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .btn-primary {

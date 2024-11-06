@@ -1,5 +1,6 @@
 from django import forms
 from .models import Employee
+from django.contrib.auth.password_validation import validate_password
 
 class EmployeeCreationForm(forms.ModelForm):
     class Meta:
@@ -39,21 +40,44 @@ class SetupSecurityQuestionsForm(forms.Form):
     security_question_3 = forms.ChoiceField(choices=SECURITY_QUESTIONS, label="Security Question 3")
     security_answer_3 = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'placeholder': 'Type your answer here...'}))
 
+    def clean(self):
+        cleaned_data = super().clean()
+        question_1 = cleaned_data.get('security_question_1')
+        question_2 = cleaned_data.get('security_question_2')
+        question_3 = cleaned_data.get('security_question_3')
+
+        # Check for duplicate questions
+        if len({question_1, question_2, question_3}) < 3:
+            raise forms.ValidationError("Please select unique security questions.")
+
+        return cleaned_data
+
 class SetupPasswordForm(forms.Form):
-    password = forms.CharField(
+    new_password1 = forms.CharField(
+        label="New Password",
         widget=forms.PasswordInput,
-        help_text="Password must be at least 8 characters and include a mix of letters, numbers, and symbols."
+        max_length=128,
+        strip=False,
+        required=True,
+        help_text="Enter a new password."
     )
-    confirm_password = forms.CharField(
+    new_password2 = forms.CharField(
+        label="Confirm New Password",
         widget=forms.PasswordInput,
-        label="Confirm Password"
+        max_length=128,
+        strip=False,
+        required=True,
+        help_text="Enter the same password as before."
     )
 
     def clean(self):
         cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        confirm_password = cleaned_data.get("confirm_password")
-        if password and confirm_password and password != confirm_password:
-            raise forms.ValidationError("Passwords do not match.")
-        # Add additional password validation here (e.g., length, complexity)
+        password1 = cleaned_data.get("new_password1")
+        password2 = cleaned_data.get("new_password2")
+
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("The two password fields must match.")
+
+        validate_password(password1)  # Validate password strength
+
         return cleaned_data

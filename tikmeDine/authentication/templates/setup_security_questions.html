@@ -8,8 +8,15 @@
 {% block content %}
 <div class="main-container">
     <h2>Set Up Security Questions</h2>
-    <form method="post">
+    <form method="post" action="{% url 'setup_security_questions' %}" id="security-questions-form" onsubmit="return saveAndRedirect(event);">
+
         {% csrf_token %}
+        <input type="hidden" name="token" value="{{ token }}">
+
+        <div class="form-group">
+            {{ form.security_question_1.label_tag }}
+            {{ form.security_question_1 }}
+        </div>
         <div class="form-group">
             {{ form.security_answer_1.label_tag }}
             <div class="input-group">
@@ -18,6 +25,11 @@
                     <span class="input-group-text" onclick="toggleVisibility('id_security_answer_1')"><i class="fas fa-eye"></i></span>
                 </div>
             </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.security_question_2.label_tag }}
+            {{ form.security_question_2 }}
         </div>
         <div class="form-group">
             {{ form.security_answer_2.label_tag }}
@@ -28,6 +40,11 @@
                 </div>
             </div>
         </div>
+
+        <div class="form-group">
+            {{ form.security_question_3.label_tag }}
+            {{ form.security_question_3 }}
+        </div>
         <div class="form-group">
             {{ form.security_answer_3.label_tag }}
             <div class="input-group">
@@ -37,11 +54,68 @@
                 </div>
             </div>
         </div>
+
+        <p id="error-message" style="color: red; display: none;">Please choose different questions for each field.</p>
         <button type="submit">Next</button>
     </form>
 </div>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/admin_login.js' %}"></script>
+<script>
+    function toggleVisibility(inputId) {
+        const input = document.getElementById(inputId);
+        input.type = (input.type === 'password') ? 'text' : 'password';
+    }
+
+    function saveAndRedirect(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const form = document.getElementById('security-questions-form');
+        const formData = new FormData(form);
+        const questions = [
+            formData.get('security_question_1'),
+            formData.get('security_question_2'),
+            formData.get('security_question_3')
+        ];
+        const answers = [
+            formData.get('security_answer_1'),
+            formData.get('security_answer_2'),
+            formData.get('security_answer_3')
+        ];
+
+        // Check for duplicate questions
+        const uniqueQuestions = new Set(questions);
+        if (uniqueQuestions.size !== questions.length) {
+            document.getElementById('error-message').style.display = 'block';
+            return false; // Prevent form submission
+        }
+
+        document.getElementById('error-message').style.display = 'none';
+
+        fetch('/api-auth/setup_security_questions/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken') // Include CSRF token for security
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Use the URL returned from the response
+                window.location.href = data.url; // Redirect to the password setup page
+            } else {
+                // Handle errors, such as invalid responses
+                alert('Failed to submit the security questions. Please try again.');
+                console.error('Error response:', data);
+            }
+        })
+        .catch(error => {
+            // Handle any network errors
+            alert('An error occurred. Please check your network connection and try again.');
+            console.error('Fetch error:', error);
+        });
+    }
+</script>
 {% endblock %}
