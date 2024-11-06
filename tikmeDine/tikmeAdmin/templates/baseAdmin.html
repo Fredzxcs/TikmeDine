@@ -31,8 +31,10 @@
     {% include 'includes/sidebar.html' %}
     <div>
         <main>
-            {% block content %}
-            {% endblock %}
+            <div id="mainContent">
+                {% block content %}
+                {% endblock %}
+            </div>
         </main>
     </div>
 

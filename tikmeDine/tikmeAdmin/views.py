@@ -1,7 +1,8 @@
 # tikmeReservation/views.py
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 
-@login_required
 def admin_dashboard(request):
-    return render(request, 'admin_dashboard')
+    return render(request, 'admin_dashboard.html')
+
+def create_reservation(request):
+    return render(request, 'create_reservation.html')
