@@ -1,58 +1,37 @@
-// Function to get the JWT token from local storage
-function getToken() {
-    return localStorage.getItem('jwtToken');
-}
+ // Access JWT token from Django context
+ const jwtToken = "{{ token }}";
 
-// Function to validate the token (simple check, customize as needed)
-function isTokenValid(token) {
-    if (!token) return false;
+ // Toggle visibility for password fields
+ function toggleVisibility(fieldId) {
+     const field = document.getElementById(fieldId);
+     field.type = field.type === "password" ? "text" : "password";
+ }
 
-    const payload = JSON.parse(atob(token.split('.')[1])); // Decode the payload
-    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+ // Example function to use JWT token in an API request
+ async function submitSecurityAnswers() {
+     const formData = new FormData(document.getElementById('security-questions-form'));
+     try {
+         const response = await fetch('/api/security-answers/', {
+             method: 'POST',
+             headers: {
+                 'Authorization': `Bearer ${jwtToken}`,  // Pass JWT in the Authorization header
+                 'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+             },
+             body: formData
+         });
+         const result = await response.json();
+         if (response.ok) {
+             console.log("Success:", result);
+         } else {
+             console.error("Error:", result);
+         }
+     } catch (error) {
+         console.error("Request failed:", error);
+     }
+ }
 
-    // Check if the token is expired
-    return payload.exp > currentTime;
-}
-
-// Function to handle page load
-function onPageLoad() {
-    const token = getToken();
-
-    // Check if token is present and valid
-    if (!token || !isTokenValid(token)) {
-        alert("Your session has expired or you are not logged in. Please log in again.");
-        window.location.href = '/login'; // Redirect to the login page
-    }
-}
-
-// Function to send a request with the JWT token
-function sendRequestWithToken(url, method = 'GET', data = null) {
-    const token = getToken();
-    if (!token) {
-        console.error("No token found");
-        return;
-    }
-
-    const headers = new Headers({
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-    });
-
-    const options = {
-        method: method,
-        headers: headers,
-        body: data ? JSON.stringify(data) : null
-    };
-
-    return fetch(url, options)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .catch(error => console.error('There was a problem with your fetch operation:', error));
-}
-
-// Call onPageLoad when the document is ready
-document.addEventListener('DOMContentLoaded', onPageLoad);
+ // Attach form submission handler to submit security answers
+ document.getElementById('security-questions-form').addEventListener('submit', function (event) {
+     event.preventDefault();
+     submitSecurityAnswers();
+ });
