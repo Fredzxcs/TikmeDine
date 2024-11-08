@@ -26,6 +26,10 @@
     <link rel="stylesheet" href="{% static 'css/reservationTheme.css' %}">
     <link rel="stylesheet" href="{% static 'css/corePayment.css' %}">
     <link rel="stylesheet" href="{% static 'css/paymentFeature.css' %}">
+    
+    <!-- Menu Bar
+    <link rel="stylesheet" href="{% static 'css/menubar.css' %}">
+     -->
 
     <!-- Home, Menu, Reservation, FAQ, Contact Page -->
     {% block extra_css %}
@@ -34,6 +38,8 @@
 <body>
 
     {% include 'includes/sidebar.html' %}
+    <!-- Home, Menu, Reservation, FAQ, Contact Page 
+    {% include 'includes/menubar.html' %} -->
     <div id="main-content">
         <main>
             {% block content %}

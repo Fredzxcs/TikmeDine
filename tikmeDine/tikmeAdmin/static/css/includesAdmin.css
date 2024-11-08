@@ -5,6 +5,7 @@
     left: 0;
     height: 100%;
     transition: width 0.3s; /* Smooth transition for sidebar width */
+    z-index: 3;
 }
 
 /* Sidebar styles */
@@ -20,6 +21,7 @@
     transition: width 0.3s;
     font-family: 'Poppins';
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    z-index: 3;
 }
 
 .sidebar.collapsed {

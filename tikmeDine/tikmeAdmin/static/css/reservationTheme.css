@@ -132,6 +132,7 @@ ul.page-section {
   flex-wrap: wrap;
   -ms-flex-align: start;
   align-items: flex-start;
+  z-index: 1;
 }
 ul.page-section {
   margin: 0;
