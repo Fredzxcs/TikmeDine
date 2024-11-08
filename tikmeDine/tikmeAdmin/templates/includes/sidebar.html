@@ -1,4 +1,5 @@
 {% load static %} 
+
 <div class="sidebar-wrapper" id="sidebar">
     <div class="sidebar">
         <div class="sidebar-header">
@@ -15,7 +16,7 @@
             <i class="fa fa-fw fa-users"></i><span>Guests</span>
         </a>
 
-        <a href="#create_reservation">
+        <a href="{% url 'create_reservation' %}">
             <i class="fa fa-fw fa-chair"></i> 
             <span>Create Reservations</span>
         </a>
@@ -40,7 +41,7 @@
         <a href="#">
             <i class="fa fa-fw fa-cog"></i> <span>Settings</span>
         </a>
-        <a href="#admin_login">
+        <a href="{% url 'admin_login' %}">
             <i class="fa fa-fw fa-sign-out-alt"></i> <span>Logout</span>
         </a>
         
@@ -51,9 +52,3 @@
     </div>
 </div>
 
-<div id="main-content" class="main-content">
-    <main>
-        <!-- Main content goes here -->
-        <h1>Welcome to the Admin Dashboard</h1>
-    </main>
-</div>
