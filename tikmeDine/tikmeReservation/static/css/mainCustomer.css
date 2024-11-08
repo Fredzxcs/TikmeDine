@@ -49,7 +49,8 @@
 /* Main Text Animation */
 .main-text {
     font-size: 5rem;
-    color: transparent; /* Start with no fill */
+    color: transparent;
+    color: #a75bca; /* Start with no fill */
     font-family: 'Cinzel Decorative', cursive;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
     display: inline-block;
