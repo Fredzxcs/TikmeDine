@@ -3,7 +3,7 @@ from django.urls import path
 from .views import setup_account, setup_password, admin_login, portal, system_admin_login, system_admin_dashboard,change_status, send_email
 
 urlpatterns = [
-    path('', portal, name='portal'),
+    path('portal/', portal, name='portal'),
     path('admin_login/', admin_login, name='admin_login'),
     path('system_admin_login/', system_admin_login, name='system_admin_login'),
     path('system_admin_dashboard/', system_admin_dashboard, name='system_admin_dashboard'),
