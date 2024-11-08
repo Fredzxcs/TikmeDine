@@ -315,7 +315,8 @@ def jwt_authenticate(request):
     return None
 
 
-# Django View (setup_account)
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def setup_account(request, uidb64, token):
     # Store the token in session
     request.session['jwt_token'] = token
@@ -343,61 +344,39 @@ def setup_account(request, uidb64, token):
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def setup_security_questions(request):
-    user = jwt_authenticate(request)  # Ensure you have this function defined
-    if user:
-        if request.method == 'POST':
-            serializer = SetupSecurityQuestionsSerializer(data=request.data)
-            if serializer.is_valid():
-                try:
-                    serializer.save(user=user)  # Explicitly pass the user to save method
-                    uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
-                    token = str(AccessToken.for_user(user))
-                    return Response({
-                        "success": "Security questions set up successfully",
-                        "url": reverse('setup_password', kwargs={'uidb64': uidb64, 'token': token})
-                    }, status=status.HTTP_201_CREATED)
-                except ValidationError as e:
-                    return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    user = jwt_authenticate(request)
+    if not user:
+        return Response({"detail": "Authentication credentials were not provided."}, status=status.HTTP_401_UNAUTHORIZED)
 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    if request.method == 'POST':
+        serializer = SetupSecurityQuestionsSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                serializer.save(user=user)
+                return Response({
+                    "success": True,
+                    "redirect_url": "/setup-password"  # Adjust to your URL name
+                })
+            except Exception as e:
+                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = SetupSecurityQuestionsSerializer()
-        return Response({'form': serializer.data}, status=status.HTTP_200_OK)
-
-    return Response({"detail": "Authentication credentials were not provided."}, status=status.HTTP_401_UNAUTHORIZED)
+    form = SetupSecurityQuestionsForm()
+    return render(request, 'setup_security_questions.html', {"form": form, "user": user})
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def setup_password(request, uidb64, token):
-    # Attempt to decode the uidb64 and get the associated user
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        employee = get_object_or_404(User, pk=uid)
-
-        # Validate the JWT token
-        AccessToken(token)  # This will raise an error if the token is invalid
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist, TokenError):
-        return Response({'error': 'Invalid link or expired token.'}, status=status.HTTP_400_BAD_REQUEST)
+def setup_password(request):
+    # Check if the user is authenticated
+    user = jwt_authenticate(request)
+    if not user:
+        return Response({"detail": "Authentication credentials were not provided."}, status=status.HTTP_401_UNAUTHORIZED)
 
     if request.method == 'POST':
-        # Use the SetupPasswordSerializer to validate and save the new password
-        serializer = SetupPasswordSerializer(data=request.data)
-        if serializer.is_valid():
-            employee.set_password(serializer.validated_data['new_password1'])  # Set the new password
-            employee.save()  # Save the employee instance
-            # Redirect to the login page or render success message
-            return render(request, 'setup_password.html', {
-                'form': SetupPasswordSerializer(),  # Reset form after success
-                'success_message': "Password set successfully.",
-                'uidb64': uidb64,
-                'token': token,
-            })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        form = SetupPasswordForm(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+            return Response({"success": "Password setup successful!"}, status=status.HTTP_200_OK)
 
-    # Handle GET request
-    serializer = SetupPasswordSerializer()  # Create an empty serializer for GET requests
-    return render(request, 'setup_password.html', {
-        'form': serializer.data,
-        'uidb64': uidb64,
-        'token': token,
-    })
+    return render(request, 'setup_password.html', {'form': SetupPasswordForm()})
