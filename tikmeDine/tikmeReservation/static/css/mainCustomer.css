@@ -176,7 +176,7 @@
 .home {
     min-height: 100vh;
     width: 100vw;
-    background-image: url('/static/assets/images/tikme.png');
+    background-image: url('../images/tikme.png');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -206,7 +206,7 @@
     left: 0;
     height: 11rem;
     width: 100%;
-    background: url('/static/assets/images/wave.png');
+    background: url('../images/wave.png');
     background-size: 100rem 11rem;
     animation: waves 8s linear infinite;
     background-repeat: repeat-x;

@@ -1,9 +1,7 @@
 from django.shortcuts import render
 
 
-# Authentication
-def admin_login(request):
-    return render(request, 'admin_login.html')
+
 # dashboard view
 def admin_dashboard(request):
     return render(request, 'admin_dashboard.html')

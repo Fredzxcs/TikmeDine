@@ -3,11 +3,15 @@
 from django.urls import path  
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import (
-    # Portal Views
-    portal,
+    # Admin Actions
+    admin_login,
+    send_reset_password_email,
 
-    # Admin Views
-    system_admin_login,
+    # Password Management
+    forgot_password,
+    reset_password,
+
+    # Additional Views
     system_admin_dashboard,
     add_employee,
     change_status,
@@ -32,11 +36,13 @@ from .views import (
 )
 
 urlpatterns = [
-    # Portal Routes
-    path('portal/', portal, name='portal'),
+
+    path('admin_login/', admin_login, name='admin_login'),
+    path('send_reset_password_email/<int:employee_id>/', send_reset_password_email, name='send_reset_password_email'),
+    path('forgot_password/', forgot_password, name='forgot_password'),
+    path('reset_password/<uidb64>/<token>/', reset_password, name='reset_password'),
 
     # Admin Routes
-    path('system_admin_login/', system_admin_login, name='system_admin_login'),
     path('system_admin_dashboard/', system_admin_dashboard, name='system_admin_dashboard'),
     path('add_employee/', add_employee, name='add_employee'),
     path('change_status/<int:employee_id>/<str:status>/', change_status, name='change_status'),
