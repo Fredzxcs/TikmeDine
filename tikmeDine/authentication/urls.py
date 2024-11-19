@@ -5,11 +5,13 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import (
     # Admin Actions
     admin_login,
+    admin_dashboard,
     send_reset_password_email,
 
     # Password Management
     forgot_password,
     reset_password,
+    tech_support,
 
     # Additional Views
     system_admin_dashboard,
@@ -32,15 +34,22 @@ from .views import (
     send_account_locked_email,
     send_permanently_locked_email,
     jwt_authenticate,
+    unauthorized_access,
+    invalid_link,
     
 )
 
 urlpatterns = [
 
     path('admin_login/', admin_login, name='admin_login'),
+     path('admin_dashboard/', admin_dashboard, name='admin_dashboard'),
     path('send_reset_password_email/<int:employee_id>/', send_reset_password_email, name='send_reset_password_email'),
     path('forgot_password/', forgot_password, name='forgot_password'),
     path('reset_password/<uidb64>/<token>/', reset_password, name='reset_password'),
+    path('tech-support/', tech_support, name='tech_support'),
+    path('unauthorized/', unauthorized_access, name='unauthorized_access'),
+    path('invalid_link/', invalid_link, name='invalid_link'),
+
 
     # Admin Routes
     path('system_admin_dashboard/', system_admin_dashboard, name='system_admin_dashboard'),

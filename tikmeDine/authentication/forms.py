@@ -2,6 +2,15 @@ from django import forms
 from .models import Employee
 from django.contrib.auth.password_validation import validate_password
 
+
+
+class TechSupportForm(forms.Form):
+    full_name = forms.CharField(label='Full Name', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label='Email Address', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    phone_number = forms.CharField(label='Phone Number (optional)', max_length=15, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    issue_description = forms.CharField(label='Please describe your issue in detail.', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
+    attachment = forms.FileField(label='Attach screenshots or documents to help us understand your issue better.', required=False, widget=forms.FileInput(attrs={'class': 'form-control'}))
+
 class EmployeeCreationForm(forms.ModelForm):
     class Meta:
         model = Employee

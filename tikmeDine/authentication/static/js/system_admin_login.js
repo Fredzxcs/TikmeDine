@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const password = document.getElementById('password').value;
 
             // Send login request to the server
-            fetch('/api-auth/system_admin_login/', {
+            fetch('/api-auth/admin_login/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

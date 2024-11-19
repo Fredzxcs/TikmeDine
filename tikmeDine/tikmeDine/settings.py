@@ -32,7 +32,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework.authtoken',
+    
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -43,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'authentication.middleware.JWTMiddleware',  # Add your middleware here
+  
 ]
 
 REST_FRAMEWORK = {
@@ -95,6 +99,9 @@ DATABASES = {
         'HOST': os.environ.get('DB_HOST'),
     }
 }
+
+
+AUTH_USER_MODEL = 'authentication.Employee'
 
 
 # Password validation

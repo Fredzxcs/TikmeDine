@@ -39,7 +39,7 @@ class SetupPasswordSerializer(serializers.Serializer):
         if attrs['new_password1'] != attrs['new_password2']:
             raise serializers.ValidationError("The two password fields must match.")
         
-        validate_password(attrs['new_password1'])  # Check password strength
+        validate_password(attrs['new_password1'])  # Use Django’s built-in password validation
         return attrs
 
     def save(self, employee):

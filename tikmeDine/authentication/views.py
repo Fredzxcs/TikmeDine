@@ -2,11 +2,11 @@
 import logging
 from datetime import datetime, timedelta
 import jwt
+import json
 
 # Django Core Imports
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, get_user_model
-from django.contrib.auth.decorators import login_required   
+from django.contrib.auth import authenticate, get_user_model, login
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.conf import settings
@@ -16,7 +16,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.exceptions import ValidationError
 from django.contrib import messages
-
+from django.contrib.auth.models import Group
+from django.core.paginator import Paginator
 
 # Django REST Framework Imports
 from rest_framework.response import Response
@@ -25,98 +26,134 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken, TokenError
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.authentication import get_authorization_header
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework import status
 
 # Local Imports
 from .models import Employee
-from .forms import EmployeeCreationForm, SetupSecurityQuestionsForm, SetupPasswordForm
+from .forms import EmployeeCreationForm, SetupSecurityQuestionsForm, SetupPasswordForm, TechSupportForm
 from .serializers import EmployeeSerializer, SetupSecurityQuestionsSerializer, SetupPasswordSerializer
+from authentication.utils import jwt_authenticate 
+
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
-# Function to generate access and refresh tokens using Simple JWT
-def generate_tokens(user):
+
+# Helper function to generate JWT token for the authenticated user
+def generate_jwt_token(user):
     refresh = RefreshToken.for_user(user)
-    return str(refresh.access_token), str(refresh)
-
-# Standard Library Imports
-import logging
-from datetime import datetime, timedelta
-import jwt
-
-# Django Core Imports
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, get_user_model
-from django.contrib.auth.decorators import login_required   
-from django.core.mail import send_mail
-from django.urls import reverse
-from django.conf import settings
-from django.http import JsonResponse
-from django.utils import timezone
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
-
-
-# Django REST Framework Imports
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken, TokenError
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.authentication import get_authorization_header
-from rest_framework import status
-
-# Local Imports
-from authentication .models import Employee
-from authentication .forms import EmployeeCreationForm, SetupSecurityQuestionsForm, SetupPasswordForm
-from authentication .serializers import EmployeeSerializer, SetupSecurityQuestionsSerializer, SetupPasswordSerializer
-
-User = get_user_model()
-logger = logging.getLogger(__name__)
-
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 # Admin login view
-# Admin login view (handling both system admin and regular admin login)
 def admin_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
+        try:
+            login_input = request.POST.get('username', '').strip()  # Username or email
+            password = request.POST.get('password', '').strip()
+        except (KeyError):
+            messages.error(request, 'Invalid data.')
+            return redirect('admin_login')
 
-        if user is not None:
-            # Generate tokens for the user
-            access_token, refresh_token = generate_tokens(user)
-            request.session['jwtToken'] = access_token
-            
-            # Fetch the employee data from the Employee model (assuming this model has a role field)
+        if not login_input or not password:
+            messages.error(request, 'Invalid username or password.')
+            return redirect('admin_login')
+
+        # Determine if the login input is an email or username
+        user = None
+        if '@' in login_input:
             try:
-                employee = Employee.objects.get(user=user)
+                user = Employee.objects.get(email=login_input)
             except Employee.DoesNotExist:
-                return JsonResponse({'error': 'Employee not found'}, status=404)
-            
-            # Check the user's role and determine the redirect URL
-            if employee.role == 'system_admin':  # Example role check for system admin
-                redirect_url = '/api-auth/system_admin_dashboard/'
-            else:
-                redirect_url = '/admin_dashboard/'
-
-            return JsonResponse({
-                'access_token': access_token,
-                'refresh_token': refresh_token,
-                'redirect_url': redirect_url
-            })
+                messages.error(request, 'Invalid email or password.')
+                return redirect('admin_login')
         else:
-            return JsonResponse({'error': 'Invalid username or password'}, status=400)
+            try:
+                user = Employee.objects.get(username=login_input)
+            except Employee.DoesNotExist:
+                messages.error(request, 'Invalid username or password.')
+                return redirect('admin_login')
+
+        # Authenticate the user
+        user = authenticate(request, username=user.username, password=password)
+        if user is None:
+            messages.error(request, 'Invalid username or password.')
+            return redirect('admin_login')
+
+        # Log the user in
+        login(request, user)
+
+        # Check the role of the user and redirect accordingly
+        if user.is_system_admin():
+            return redirect('/api-auth/system_admin_dashboard/')  # Redirect to system admin dashboard
+        elif user.is_employee():
+            return redirect('/api-admin/admin_dashboard/')  # Redirect to employee dashboard
+        else:
+            messages.error(request, 'User role is not recognized.')
+            return redirect('admin_login')
 
     return render(request, 'admin_login.html')
 
 
 
+# Unauthorized access view
+def unauthorized_access(request):
+    return render(request, 'unauthorized_access.html')
+
+# invalid or expired token view
+def invalid_link(request):
+    return render(request, 'invalid_link.html')
+
+def tech_support(request):
+    if request.method == 'POST':
+        form = TechSupportForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Get form data
+            full_name = form.cleaned_data['full_name']
+            email = form.cleaned_data['email']
+            phone_number = form.cleaned_data.get('phone_number', 'N/A')
+            issue_description = form.cleaned_data['issue_description']
+            attachment = request.FILES.get('attachment')
+
+            # Send email
+            try:
+                send_mail(
+                    f'Tech Support Request from {full_name}',
+                    f'Issue Details:\n\n{issue_description}\n\nPhone: {phone_number}\nEmail: {email}',
+                    email,  # Sender's email
+                    ['support@tikmedine.com'],  # Receiver's email (e.g., support team)
+                    fail_silently=False,
+                )
+                # On success, render the success page
+                return render(request, 'tech_support.html', {'form': form, 'success': True})
+            except Exception as e:
+                # If sending the email fails, render the error page
+                return render(request, 'tech_support.html', {'form': form, 'error': f'Error sending email: {str(e)}'})
+
+        else:
+            # If form validation fails, render with validation errors
+            return render(request, 'tech_support.html', {'form': form, 'error': 'Form is not valid.'})
+
+    else:
+        form = TechSupportForm()
+    return render(request, 'tech_support.html', {'form': form})
+
+
+
+
 def send_reset_password_email(request, employee, is_reset_notification=False):
-    access_token, _ = generate_tokens(employee)  # Generate only the access token for the link
+    # Generate the refresh token (can be used to generate access token too)
+    refresh = RefreshToken.for_user(employee)
+    access_token = str(refresh.access_token)  # Use the access token for the reset link
+
+    # Encode the employee's primary key for use in the URL
     uid = urlsafe_base64_encode(force_bytes(employee.pk))
+
+    # Build the password reset link with the token
     link = reverse('reset_password', kwargs={'uidb64': uid, 'token': access_token})
     full_link = f"https://{request.get_host()}{link}"
 
@@ -132,6 +169,7 @@ def send_reset_password_email(request, employee, is_reset_notification=False):
     Tikme Dine Team
     """
 
+    # Send the email
     send_mail(
         email_subject,
         email_body,
@@ -140,17 +178,21 @@ def send_reset_password_email(request, employee, is_reset_notification=False):
         fail_silently=False,
     )
     
-@api_view(['POST'])
+
 def forgot_password(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         employee = Employee.objects.filter(email=email).first()
-        
+
         if employee:
             send_reset_password_email(request, employee)
-            return JsonResponse({"message": "Password reset link sent to your email."})
+            messages.success(request, "Password reset link sent to your email.")
         else:
-            return JsonResponse({"error": "Email is not registered."}, status=404)
+            messages.error(request, "Email is not registered.")
+
+        # Redirect back to the same page to display messages and prevent form resubmission
+        return redirect('forgot_password')
+
     return render(request, 'forgot_password.html')
 
 
@@ -174,46 +216,66 @@ def reset_password(request, uidb64, token):
 
     return render(request, 'reset_password.html', {'password_form': password_form})
 
+def admin_dashboard(request):
+    # Authenticate the user using the JWT token
+    user = jwt_authenticate(request)
 
-@api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])  # Ensure this checks the token
+    if user:
+        try:
+            # Get the Employee instance associated with the authenticated user
+            employee = Employee.objects.get(username=user.username)
+
+            # Render the dashboard for authenticated employees
+            return render(request, 'admin_dashboard.html', {'employee': employee})
+        except Employee.DoesNotExist:
+            # Handle case where Employee record is not found for the user
+            messages.error(request, 'Employee record not found.')
+            return render(request, 'unauthorized_access.html')  # Adjusted to render the new template
+    else:
+        # If JWT token is invalid or expired, return an error message
+       messages.error(request, 'Invalid or Expired.Please log in again.')
+    return render(request, 'invalid_link.html')  # Render unauthorized access page
+
 def system_admin_dashboard(request):
     # Authenticate the user using the JWT token
     user = jwt_authenticate(request)
-    
+
     if user:
-        employees = Employee.objects.all()
+        # Proceed with the employee list and form handling for system admin
+        employees = Employee.objects.all()  # List all employees
 
         if request.method == 'POST':
             # Check if onboarding email action is requested
             if 'send_onboarding_email' in request.POST:
                 employee_id = request.POST.get('employee_id')
                 employee = get_object_or_404(Employee, id=employee_id)
-                
-                # Send onboarding email (assuming the function returns a success boolean)
-                if send_onboarding_email(employee.email):
+
+                # Send onboarding email
+                email_sent = send_onboarding_email(employee.email)
+                if email_sent:
                     messages.success(request, 'Onboarding email sent successfully.')
                 else:
                     messages.error(request, 'Failed to send onboarding email.')
-                    
+
                 return redirect('system_admin_dashboard')  # Redirect to avoid form resubmission
-            
+
             # Handle employee creation or update
             employee_id = request.POST.get('employee_id')
             employee = get_object_or_404(Employee, id=employee_id) if employee_id else None
-            
+
             form = EmployeeCreationForm(request.POST, instance=employee)
             if form.is_valid():
                 form.save()
-                return redirect('system_admin_dashboard')  # Redirect to refresh the employee list
+                return redirect('system_admin_dashboard')
+
         else:
             form = EmployeeCreationForm()
 
-        # Render the dashboard with employee data, the form, and success messages
+        # Render the system admin dashboard with employee data and form
         return render(request, 'system_admin_dashboard.html', {'employees': employees, 'form': form})
 
-    # Render login page if not authenticated
-    return render(request, 'system_admin_login.html', {'error': 'Authentication required.'})
+    # If user is not authenticated, redirect to login
+    return redirect('admin_login')
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -401,23 +463,6 @@ def send_reactivation_confirmation_email(employee):
         [employee.email],
         fail_silently=False,
     )
-
-
-
-# Helper function to authenticate via JWT   
-def jwt_authenticate(request):
-    auth = get_authorization_header(request).split()
-    if len(auth) == 2 and auth[0].lower() == b'bearer':
-        token = auth[1].decode('utf-8')  # Decode bytes to string
-        try:
-            # Validate and decode the token
-            valid_token = JWTAuthentication().get_validated_token(token)
-            return JWTAuthentication().get_user(valid_token)
-        except Exception as e:
-            logger.error(f"JWT Authentication error: {e}")
-            return None
-    logger.warning("No authorization header or incorrect format.")
-    return None
 
 
 @api_view(['GET', 'POST'])
