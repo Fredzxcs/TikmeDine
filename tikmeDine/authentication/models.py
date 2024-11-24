@@ -7,24 +7,26 @@ class Employee(AbstractUser):
         ('active', 'Active'),
         ('suspended', 'Suspended'),
     ]
-    
+
+    security_question_1 = models.CharField(max_length=255, blank=True, null=True)
     security_answer_1 = models.CharField(max_length=255, blank=True, null=True)
+    security_question_2 = models.CharField(max_length=255, blank=True, null=True)
     security_answer_2 = models.CharField(max_length=255, blank=True, null=True)
+    security_question_3 = models.CharField(max_length=255, blank=True, null=True)
     security_answer_3 = models.CharField(max_length=255, blank=True, null=True)
-
-    job_title = models.CharField(max_length=150, null=True, blank=True)
-
+    account_setup_complete = models.BooleanField(default=False)
     account_status = models.CharField(
         max_length=50,
         choices=ACCOUNT_STATUS_CHOICES,
         default='pending',
     )
-
     role = models.CharField(
         max_length=50,
         choices=[('system_admin', 'System Admin'), ('employee', 'Employee')],
         default='employee',
     )
+
+    job_title = models.CharField(max_length=255, blank=True, null=True)
 
     def is_system_admin(self):
         return self.role == 'system_admin'

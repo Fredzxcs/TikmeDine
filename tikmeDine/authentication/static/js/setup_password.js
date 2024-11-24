@@ -1,83 +1,96 @@
-// Function to get the JWT token from local storage
-function getToken() {
-    return localStorage.getItem('jwtToken'); // Assuming you're storing the JWT in local storage
+// Show modal function
+function showModal(modalId) {
+    const modal = new bootstrap.Modal(document.getElementById(modalId));
+    modal.show();
 }
 
-// Function to validate the token (simple check, customize as needed)
-function isTokenValid(token) {
-    if (!token) return false;
-
-    const payload = JSON.parse(atob(token.split('.')[1])); // Decode the payload
-    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-
-    // Check if the token is expired
-    return payload.exp > currentTime;
+// Redirect function for success modal
+function redirectToLogin() {
+    window.location.href = "{% url 'admin_login' %}";
 }
 
-// Function to handle page load
-function onPageLoad() {
-    const token = getToken();
+// Function to check password strength
+function checkPasswordStrength(password) {
+    const lengthCriteria = /.{8,}/;
+    const digitCriteria = /\d/;
+    const lowercaseCriteria = /[a-z]/;
+    const uppercaseCriteria = /[A-Z]/;
 
-    // Check if token is present and valid
-    if (!token || !isTokenValid(token)) {
-        alert("Your session has expired or you are not logged in. Please log in again.");
-        window.location.href = '/login'; // Redirect to the login page
-    }
-}
-
-// Function to toggle password visibility
-function toggleVisibility(inputId) {
-    const inputField = document.getElementById(inputId);
-    if (inputField.type === "password") {
-        inputField.type = "text"; // Show the password
+    if (password.match(lengthCriteria) && password.match(digitCriteria) && password.match(lowercaseCriteria) && password.match(uppercaseCriteria)) {
+        return 'Strong';
+    } else if (password.length >= 6) {
+        return 'Medium';
     } else {
-        inputField.type = "password"; // Hide the password
+        return 'Weak';
     }
 }
 
-// Function to submit the form with the JWT token (optional)
-function submitForm(event) {
-    event.preventDefault(); // Prevent the default form submission
+// Function to validate password
+function validatePassword(password, confirmPassword) {
+    if (password !== confirmPassword) {
+        return 'Passwords do not match.';
+    }
+
+    const strength = checkPasswordStrength(password);
+    if (strength === 'Weak') {
+        return 'Your password is too weak. Please choose a stronger password.';
+    }
+
+    return null;
+}
+
+// Handle form submission
+document.getElementById('password-setup-form')?.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
     const form = event.target;
-    
-    const token = getToken();
-    if (!token) {
-        console.error("No token found");
+    const password = form.querySelector('input[name="new_password1"]').value;
+    const confirmPassword = form.querySelector('input[name="new_password2"]').value;
+
+    // Validate passwords
+    const validationError = validatePassword(password, confirmPassword);
+    if (validationError) {
+        document.getElementById('error-message').textContent = validationError;
+        document.getElementById('error-message').classList.remove('d-none');
         return;
     }
 
-    // Prepare form data to send
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries()); // Convert FormData to a regular object
+    // Show loading modal
+    showModal('loadingModal');
 
-    const headers = new Headers({
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-    });
+    try {
+        // Simulate form submission using Fetch API
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+        });
 
-    fetch(form.action, {
-        method: form.method,
-        headers: headers,
-        body: JSON.stringify(data)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+        // Hide loading modal
+        const loadingModal = bootstrap.Modal.getInstance(document.getElementById('loadingModal'));
+        loadingModal.hide();
+
+        if (response.ok) {
+            // Show success modal
+            showModal('successModal');
+        } else {
+            // Show error modal
+            showModal('errorModal');
         }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Success:', data);
-        // Handle success response (e.g., redirect to another page)
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Handle error response (e.g., show an error message)
-    });
-}
+    } catch (error) {
+        // Hide loading modal and show error modal on fetch failure
+        const loadingModal = bootstrap.Modal.getInstance(document.getElementById('loadingModal'));
+        loadingModal.hide();
+        showModal('errorModal');
+    }
+});
 
-// Call onPageLoad when the document is ready
-document.addEventListener('DOMContentLoaded', onPageLoad);
+// Update password strength indicator on input
+document.querySelector('input[name="new_password1"]')?.addEventListener('input', function () {
+    const password = this.value;
+    const strengthIndicator = document.getElementById('password-strength-indicator');
 
-// Attach form submission event
-document.addEventListener('submit', submitForm);
+    const strength = checkPasswordStrength(password);
+    strengthIndicator.textContent = `Password strength: ${strength}`;
+    strengthIndicator.className = ''; // Reset classes
+    strengthIndicator.classList.add(strength.toLowerCase()); // Add appropriate class
+});

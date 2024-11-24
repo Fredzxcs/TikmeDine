@@ -12,9 +12,11 @@ class TechSupportForm(forms.Form):
     attachment = forms.FileField(label='Attach screenshots or documents to help us understand your issue better.', required=False, widget=forms.FileInput(attrs={'class': 'form-control'}))
 
 class EmployeeCreationForm(forms.ModelForm):
-    class Meta:
+    class Meta: 
         model = Employee
-        fields = ('username', 'email', 'first_name', 'last_name', 'job_title')
+        fields = ('username', 'email', 'first_name', 'last_name', 'job_title', 'role')
+    # Explicitly ensuring role is selected; otherwise, defaults to employee.
+    role = forms.ChoiceField(choices=Employee._meta.get_field('role').choices, required=True)
         
 class SetupSecurityQuestionsForm(forms.Form):
     SECURITY_QUESTIONS = [
@@ -64,7 +66,10 @@ class SetupSecurityQuestionsForm(forms.Form):
 class SetupPasswordForm(forms.Form):
     new_password1 = forms.CharField(
         label="New Password",
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Enter your new password',
+            'class': 'form-control'
+        }),
         max_length=128,
         strip=False,
         required=True,
@@ -72,12 +77,16 @@ class SetupPasswordForm(forms.Form):
     )
     new_password2 = forms.CharField(
         label="Confirm New Password",
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Confirm your new password',
+            'class': 'form-control'
+        }),
         max_length=128,
         strip=False,
         required=True,
         help_text="Enter the same password as before."
     )
+
 
     def clean(self):
         cleaned_data = super().clean()

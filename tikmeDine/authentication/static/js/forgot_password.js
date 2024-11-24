@@ -1,7 +1,11 @@
-    // Function to get the JWT token from local storage
-    function getToken() {
-        return localStorage.getItem('jwtToken'); // Assuming the JWT is stored in local storage
-    }
+// Access JWT token from storage or context
+const jwtToken = sessionStorage.getItem('jwtToken') || localStorage.getItem('jwtToken') || "{{ token }}";
+
+// Toggle visibility for password fields
+function toggleVisibility(fieldId) {
+    const field = document.getElementById(fieldId);
+    field.type = field.type === "password" ? "text" : "password";
+}
 
     // Function to handle form submission
     function handleFormSubmit(event) {

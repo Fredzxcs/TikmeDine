@@ -20,27 +20,21 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch('/api-auth/admin_login/', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded', // Standard form encoding
-                    'X-CSRFToken': getCSRFToken(), // CSRF token
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken(),
                 },
-                body: new URLSearchParams({
-                    username: username,
-                    password: password
-                })
+                body: JSON.stringify({ username, password }),
             })
                 .then(response => {
-                    if (response.ok) {
-                        window.location.href = response.url;  // Redirect on success
+                    if (response.redirected) {
+                        window.location.href = response.url;
                     } else {
-                        response.text().then(text => {
-                            throw new Error(text || 'Login failed');
-                        });
+                        throw new Error('Login failed');
                     }
                 })
                 .catch(error => {
                     // Hide loading spinner and display error
                     if (loadingIndicator) loadingIndicator.style.display = 'none';
-                    console.error('Error:', error);
                     errorMessageDiv.style.display = 'block';
                     errorMessageDiv.textContent = error.message;
                 });
@@ -59,11 +53,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         return csrfToken;
     }
-
-    // Password toggle visibility function
-    window.togglePassword = function () {
-        const passwordInput = document.getElementById('password');
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-    };
 });
